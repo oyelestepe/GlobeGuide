@@ -7,7 +7,7 @@ const continentToApiRegion = {
   "europe": "europe",
   "north-america": "americas",
   "south-america": "americas",
-  "oceania": "oceania",
+  "australia": "oceania",
   "antarctica": "antarctic"
 };
 
@@ -49,8 +49,6 @@ function ContinentPage() {
             <p>Languages: {Object.values(country.languages || {}).join(', ')}</p>
             <p>Currencies: {Object.values(country.currencies || {}).map(c => c.name).join(', ')}</p>
             <p>Borders: {country.borders ? country.borders.join(', ') : 'None'}</p>
-            <p>UN Member: {country.unMember ? 'Yes' : 'No'}</p>
-            <p>Driving Side: {country.car?.side || 'Unknown'}</p>
           </div>
         ))}
       </div>

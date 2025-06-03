@@ -18,8 +18,12 @@ function WorldMap() {
   const navigate = useNavigate();
   const [hoveredContinent, setHoveredContinent] = useState(null);
 
+  const getDisplayContinent = (continent) =>
+    continent === "Oceania" ? "Australia" : continent;
+
   const handleContinentClick = (continent) => {
-    navigate(`/continent/${continent.toLowerCase().replace(/\s/g, '-')}`);
+    const displayContinent = getDisplayContinent(continent);
+    navigate(`/continent/${displayContinent.toLowerCase().replace(/\s/g, '-')}`);
   };
 
   return (
