@@ -1,0 +1,117 @@
+.country-info-guess-container {
+  max-width: 420px;
+  margin: 48px auto;
+  text-align: center;
+  background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+  border-radius: 24px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+  padding: 40px 28px 32px 28px;
+  position: relative;
+  overflow: hidden;
+  font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
+  animation: fadeIn 0.7s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(30px);}
+  to { opacity: 1; transform: translateY(0);}
+}
+
+.country-info-guess-container h2 {
+  font-size: 2em;
+  margin-bottom: 12px;
+  color: #2d314d;
+  letter-spacing: 1px;
+}
+
+.country-info-guess-score {
+  font-size: 1.15em;
+  margin-bottom: 18px;
+  color: #3a506b;
+  font-weight: 600;
+}
+
+.country-info-guess-clues {
+  margin: 24px 0 18px 0;
+  text-align: left;
+  background: rgba(255,255,255,0.7);
+  border-radius: 12px;
+  padding: 18px 18px 8px 18px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.country-info-guess-clues p {
+  margin: 0 0 10px 0;
+  font-size: 1.08em;
+  color: #22223b;
+}
+
+.country-info-guess input[type="text"] {
+  width: 92%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1.5px solid #bfc9d1;
+  font-size: 1.13em;
+  margin-bottom: 12px;
+  background: #f7faff;
+  transition: border 0.2s;
+}
+
+.country-info-guess input[type="text"]:focus {
+  border: 1.5px solid #5e60ce;
+  outline: none;
+}
+
+.country-info-guess button,
+.country-info-guess .next-btn {
+  padding: 12px 28px;
+  border-radius: 10px;
+  font-size: 1.13em;
+  background: linear-gradient(90deg, #b7e4c7 60%, #57cc99 100%);
+  border: none;
+  font-weight: bold;
+  color: #22223b;
+  cursor: pointer;
+  margin-top: 6px;
+  margin-bottom: 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  transition: background 0.2s, transform 0.1s;
+}
+
+.country-info-guess button:active,
+.country-info-guess .next-btn:active {
+  background: linear-gradient(90deg, #57cc99 60%, #b7e4c7 100%);
+  transform: scale(0.98);
+}
+
+.country-info-guess .wrong-count {
+  margin-top: 18px;
+  color: #e63946;
+  font-weight: 600;
+  font-size: 1.08em;
+}
+
+.country-info-guess .answer-reveal {
+  margin-top: 18px;
+  font-weight: bold;
+  color: #e63946;
+  font-size: 1.15em;
+  letter-spacing: 0.5px;
+}
+
+.country-info-guess .restart-btn {
+  margin-top: 28px;
+  padding: 8px 22px;
+  border-radius: 8px;
+  font-size: 1em;
+  background: #eee;
+  border: none;
+  font-weight: bold;
+  color: #3a506b;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.country-info-guess .restart-btn:hover {
+  background: #d0e6fa;
+}
