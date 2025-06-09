@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { ComposableMap, Geographies, Geography } from "react-simple-maps";
+import { ComposableMap, Geographies, Geography, ZoomableGroup } from "react-simple-maps";
+import "./gamesCss/FindCountryOnMap.css";
 
 const geoUrl = "/data/countries.geojson";
 
@@ -11,6 +12,13 @@ function FindCountryOnMap() {
   const [message, setMessage] = useState("");
   const [score, setScore] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [correctGuesses, setCorrectGuesses] = useState(new Set());
+  const [position, setPosition] = useState({ 
+    coordinates: [0, 0],
+    scale: 100,
+    center: [0, 0]
+  });
+  const [tooltip, setTooltip] = useState({ show: false, content: "", x: 0, y: 0 });
 
   const pickNewCountry = (data = countries) => {
     console.log("Picking new country from", data?.length, "countries");
@@ -98,7 +106,6 @@ function FindCountryOnMap() {
   const handleCountryClick = (geo) => {
     if (revealed || !target) return;
 
-    // Use the correct property name from your GeoJSON
     const geoCode = (geo.properties['ISO3166-1-Alpha-3'] || "").toUpperCase();
     const targetCode = (target.cca3 || "").toUpperCase();
 
@@ -109,6 +116,7 @@ function FindCountryOnMap() {
       setMessage("Correct! 🎉");
       setScore(s => s + 1);
       setRevealed(true);
+      setCorrectGuesses(prev => new Set([...prev, geoCode])); // Add to correct guesses
       setTimeout(() => pickNewCountry(), 1500);
     } else {
       if (tries + 1 >= 3) {
@@ -122,87 +130,126 @@ function FindCountryOnMap() {
     }
   };
 
-  if (loading) return <div>Loading...</div>;
-  if (!target) return <div>Error loading game</div>;
+  const handleZoom = (delta) => {
+    setPosition(pos => ({
+      ...pos,
+      scale: Math.max(100, Math.min(400, pos.scale + (delta * 50))),
+      // Adjust center based on scale to keep map centered
+      center: [pos.center[0], pos.center[1]]
+    }));
+  };
+
+  // Add handleMoveEnd function to handle map panning
+  const handleMoveEnd = (position) => {
+    setPosition(pos => ({
+      ...pos,
+      coordinates: position.coordinates,
+      center: position.coordinates
+    }));
+  };
+
+  if (loading) return <div className="loading">Loading...</div>;
+  if (!target) return <div className="error">Error loading game</div>;
 
   return (
-    <div style={{
-      maxWidth: 900,
-      margin: "40px auto",
-      textAlign: "center",
-      background: "linear-gradient(135deg, #f8fafc 0%, #e0f7fa 100%)",
-      borderRadius: 24,
-      boxShadow: "0 8px 32px rgba(0,0,0,0.10)",
-      padding: "32px 16px 24px 16px",
-      border: "1px solid #e0e0e0"
-    }}>
-      <h2 style={{ fontSize: 32, color: "#222", marginBottom: 8, letterSpacing: 1 }}>Find the Country</h2>
-      <p style={{ fontSize: 20, margin: "8px 0 0 0" }}>
-        Find: <b style={{ color: "#1976d2" }}>{target.name.common}</b>
+    <div className="find-country-container">
+      <h2 className="game-title">Find the Country</h2>
+      <p className="target-country">
+        Find: <b className="target-country-name">{target.name.common}</b>
       </p>
-      <p style={{ fontSize: 16, color: "#555", margin: "4px 0 20px 0" }}>
-        Score: <span style={{ color: "#43a047", fontWeight: 600 }}>{score}</span> |
-        Tries left: <span style={{ color: "#e63946", fontWeight: 600 }}>{3 - tries}</span>
+      <p className="game-stats">
+        Score: <span className="score">{score}</span> |
+        Tries left: <span className="tries">{3 - tries}</span>
       </p>
-      <div style={{
-        margin: "0 auto",
-        width: "100%",
-        maxWidth: 820,
-        background: "#fff",
-        borderRadius: 18,
-        boxShadow: "0 4px 24px rgba(0,0,0,0.08)",
-        padding: 18,
-        border: "1px solid #e0e0e0"
-      }}>
-        <ComposableMap projection="geoEqualEarth">
-          <Geographies geography={geoUrl}>
-            {({ geographies }) =>
-              geographies.map(geo => {
-                const isTarget = revealed &&
-                  geo.properties['ISO3166-1-Alpha-3']?.toUpperCase() === target.cca3?.toUpperCase();
+      <div className="map-container">
+        <div className="zoom-controls">
+          <button
+            className="zoom-button"
+            onClick={() => handleZoom(1)}
+          >
+            +
+          </button>
+          <button
+            className="zoom-button"
+            onClick={() => handleZoom(-1)}
+          >
+            -
+          </button>
+        </div>
+        <ComposableMap
+          projection="geoEqualEarth"
+          projectionConfig={{
+            scale: position.scale,
+            center: position.center
+          }}
+          width={800}
+          height={400}
+          style={{
+            width: "100%",
+            height: "auto"
+          }}
+        >
+          <ZoomableGroup
+            center={position.coordinates}
+            onMoveEnd={handleMoveEnd}
+            zoom={position.scale / 100}
+          >
+            <Geographies geography={geoUrl}>
+              {({ geographies }) =>
+                geographies.map(geo => {
+                  const geoCode = (geo.properties['ISO3166-1-Alpha-3'] || "").toUpperCase();
+                  const isTarget = revealed && geoCode === target.cca3?.toUpperCase();
+                  const isCorrectlyGuessed = correctGuesses.has(geoCode);
 
-                return (
-                  <Geography
-                    key={geo.rsmKey}
-                    geography={geo}
-                    onClick={() => !revealed && handleCountryClick(geo)}
-                    style={{
-                      default: {
-                        fill: isTarget ? "#b7e4c7" : "#e0eafc",
-                        stroke: "#1976d2",
-                        strokeWidth: 0.6,
-                        outline: "none",
-                        cursor: revealed ? "not-allowed" : "pointer",
-                        transition: "fill 0.2s"
-                      },
-                      hover: {
-                        fill: "#90caf9",
-                        stroke: "#1976d2",
-                        strokeWidth: 1,
-                        outline: "none",
-                        cursor: revealed ? "not-allowed" : "pointer"
-                      },
-                      pressed: {
-                        fill: "#e63946",
-                        stroke: "#1976d2",
-                        strokeWidth: 1,
-                        outline: "none"
-                      }
-                    }}
-                  />
-                );
-              })
-            }
-          </Geographies>
+                  return (
+                    <Geography
+                      key={geo.rsmKey}
+                      geography={geo}
+                      onClick={() => !revealed && !isCorrectlyGuessed && handleCountryClick(geo)}
+                      style={{
+                        default: {
+                          fill: isTarget ? "#b7e4c7" : 
+                                isCorrectlyGuessed ? "#77B254" : 
+                                "#e0eafc",
+                          stroke: "#1976d2",
+                          strokeWidth: 0.6,
+                          outline: "none",
+                          cursor: revealed || isCorrectlyGuessed ? "not-allowed" : "pointer"
+                        },
+                        hover: {
+                          fill: isCorrectlyGuessed ? "#77B254" : "#F8ED8C", 
+                          stroke: "#1976d2",
+                          strokeWidth: 0.6,
+                          outline: "none",
+                          cursor: revealed || isCorrectlyGuessed ? "not-allowed" : "pointer"
+                        },
+                        pressed: {
+                          fill: "#F8ED8C",
+                          stroke: "#1976d2",
+                          strokeWidth: 0.6,
+                          outline: "none"
+                        }
+                      }}
+                    />
+                  );
+                })
+              }
+            </Geographies>
+          </ZoomableGroup>
         </ComposableMap>
+        {tooltip.show && (
+          <div 
+            className="country-tooltip"
+            style={{
+              left: tooltip.x + 10,
+              top: tooltip.y + 10
+            }}
+          >
+            {tooltip.content}
+          </div>
+        )}
       </div>
-      <div style={{
-        marginTop: 24,
-        fontWeight: "bold",
-        fontSize: 20,
-        color: message.startsWith("Correct") ? "#43a047" : "#e63946",
-        minHeight: 28
-      }}>
+      <div className={`message ${message.startsWith("Correct") ? "message-correct" : "message-wrong"}`}>
         {message}
       </div>
     </div>
