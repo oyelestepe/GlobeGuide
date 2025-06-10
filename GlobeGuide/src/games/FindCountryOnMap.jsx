@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ComposableMap, Geographies, Geography, ZoomableGroup } from "react-simple-maps";
+import { debounce } from "lodash";
 import "./gamesCss/FindCountryOnMap.css";
 
 const geoUrl = "/data/countries.geojson";
@@ -19,6 +20,7 @@ function FindCountryOnMap() {
     center: [0, 0]
   });
   const [tooltip, setTooltip] = useState({ show: false, content: "", x: 0, y: 0 });
+  const [geoData, setGeoData] = useState(null);
 
   const pickNewCountry = (data = countries) => {
     console.log("Picking new country from", data?.length, "countries");
@@ -103,6 +105,30 @@ function FindCountryOnMap() {
     });
   }, []);
 
+  useEffect(() => {
+    fetch(geoUrl)
+      .then(res => {
+        if (!res.ok) throw new Error(`Failed to fetch GeoJSON: ${res.status}`);
+        return res.json();
+      })
+      .then(data => {
+        console.log("GeoJSON data loaded:", data);
+        setGeoData(data);
+      })
+      .catch(err => {
+        console.error("Error loading GeoJSON:", err);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (!geoData) {
+      console.error("geoData is not defined yet");
+      return;
+    }
+
+    // Use geoData safely here
+  }, [geoData]);
+
   const handleCountryClick = (geo) => {
     if (revealed || !target) return;
 
@@ -148,8 +174,19 @@ function FindCountryOnMap() {
     }));
   };
 
+  const handleMouseMove = debounce((event) => {
+    setTooltip(t => ({ ...t, x: event.clientX, y: event.clientY }));
+  }, 50);
+
+  const geographyStyle = {
+    default: { fill: "#e0eafc", stroke: "#1976d2", strokeWidth: 0.6 },
+    hover: { fill: "#F8ED8C", stroke: "#1976d2", strokeWidth: 0.6 },
+    pressed: { fill: "#F8ED8C", stroke: "#1976d2", strokeWidth: 0.6 }
+  };
+
   if (loading) return <div className="loading">Loading...</div>;
   if (!target) return <div className="error">Error loading game</div>;
+  if (!geoData) return <div className="loading">Loading map data...</div>;
 
   return (
     <div className="find-country-container">
@@ -191,8 +228,8 @@ function FindCountryOnMap() {
         >
           <ZoomableGroup
             center={position.coordinates}
+            zoom={Math.min(Math.max(position.scale / 100, 1), 5)}
             onMoveEnd={handleMoveEnd}
-            zoom={position.scale / 100}
           >
             <Geographies geography={geoUrl}>
               {({ geographies }) =>
@@ -206,30 +243,7 @@ function FindCountryOnMap() {
                       key={geo.rsmKey}
                       geography={geo}
                       onClick={() => !revealed && !isCorrectlyGuessed && handleCountryClick(geo)}
-                      style={{
-                        default: {
-                          fill: isTarget ? "#b7e4c7" : 
-                                isCorrectlyGuessed ? "#77B254" : 
-                                "#e0eafc",
-                          stroke: "#1976d2",
-                          strokeWidth: 0.6,
-                          outline: "none",
-                          cursor: revealed || isCorrectlyGuessed ? "not-allowed" : "pointer"
-                        },
-                        hover: {
-                          fill: isCorrectlyGuessed ? "#77B254" : "#F8ED8C", 
-                          stroke: "#1976d2",
-                          strokeWidth: 0.6,
-                          outline: "none",
-                          cursor: revealed || isCorrectlyGuessed ? "not-allowed" : "pointer"
-                        },
-                        pressed: {
-                          fill: "#F8ED8C",
-                          stroke: "#1976d2",
-                          strokeWidth: 0.6,
-                          outline: "none"
-                        }
-                      }}
+                      style={geographyStyle}
                     />
                   );
                 })

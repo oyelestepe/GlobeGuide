@@ -1,5 +1,5 @@
 .find-country-container {
-  max-width: 900px;
+  max-width: 16000px;
   margin: 40px auto;
   text-align: center;
   background: linear-gradient(135deg, #f8fafc 0%, #e0f7fa 100%);
@@ -45,7 +45,7 @@
 .map-container {
   margin: 0 auto;
   width: 100%;
-  max-width: 900px;
+  max-width: 1400px;
   background: #fff;
   border-radius: 18px;
   box-shadow: 0 4px 24px rgba(0,0,0,0.08);
