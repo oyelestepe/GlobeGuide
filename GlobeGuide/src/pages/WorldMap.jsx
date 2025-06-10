@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ComposableMap, Geographies, Geography } from "react-simple-maps";
 import { useNavigate } from 'react-router-dom';
+import './pagesCss/WorldMap.css';
 
 const geoUrl = "/data/continents.geojson";
 
@@ -22,9 +23,20 @@ function WorldMap() {
 
   // Fetch country data and group stats by continent
   useEffect(() => {
-    fetch('https://restcountries.com/v3.1/all')
-      .then(res => res.json())
-      .then(data => {
+    const fetchCountries = async () => {
+      try {
+        const response = await fetch('https://restcountries.com/v3.1/all?fields=name,region,area,population');
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log("API Response:", data); // Log the response for debugging
+
+        if (!Array.isArray(data)) {
+          throw new Error('API response is not an array');
+        }
+
         const stats = {};
         data.forEach(country => {
           let continent = country.region;
@@ -36,12 +48,59 @@ function WorldMap() {
           stats[continent].population += country.population || 0;
           stats[continent].area += country.area || 0;
         });
+
         setContinentStats(stats);
-      });
+        console.log("Continent Stats:", stats); // Debug stats
+      } catch (err) {
+        console.error("API error:", err.message);
+
+        // Fallback data in case of API failure
+        const fallbackStats = {
+          "North America": { count: 23, population: 579024000, area: 24709000 },
+          "South America": { count: 12, population: 423581078, area: 17840000 },
+          "Europe": { count: 44, population: 748000000, area: 10180000 },
+          "Africa": { count: 54, population: 1340598147, area: 30370000 },
+          "Asia": { count: 49, population: 4641054775, area: 44579000 },
+          "Australia": { count: 14, population: 42677813, area: 8600000 },
+          "Antarctica": { count: 0, population: 0, area: 14000000 }
+        };
+
+        setContinentStats(fallbackStats);
+        console.log("Fallback Stats:", fallbackStats); // Debug fallback stats
+
+        setTooltip({
+          visible: true,
+          x: window.innerWidth / 2,
+          y: window.innerHeight / 2,
+          content: `Error loading data: ${err.message}`
+        });
+      }
+    };
+
+    fetchCountries();
   }, []);
 
-  const getDisplayContinent = (continent) =>
-    continent === "Oceania" ? "Australia" : continent;
+  const getDisplayContinent = (continent) => {
+    if (!continent) return "Unknown"; // Handle missing continent property
+    switch (continent) {
+      case "Oceania":
+        return "Australia";
+      case "Antarctic":
+        return "Antarctica";
+      case "Americas":
+        return "North America"; // Default to North America for Americas
+      case "South America":
+        return "South America";
+      case "Europe":
+        return "Europe";
+      case "Asia":
+        return "Asia";
+      case "Africa":
+        return "Africa";
+      default:
+        return continent; // Return the original continent name for other cases
+    }
+  };
 
   const handleContinentClick = (continent) => {
     const displayContinent = getDisplayContinent(continent);
@@ -49,18 +108,21 @@ function WorldMap() {
   };
 
   const handleMouseEnter = (event, continent) => {
-    setHoveredContinent(continent);
-    const stats = continentStats[continent];
+    const displayContinent = getDisplayContinent(continent);
+    setHoveredContinent(displayContinent);
+    const stats = continentStats[displayContinent];
     if (stats) {
       setTooltip({
         visible: true,
         x: event.clientX,
         y: event.clientY,
-        content: `${continent}
-          Ülke sayısı: ${stats.count}
-          Toplam nüfus: ${stats.population.toLocaleString()}
-          Toplam alan: ${stats.area.toLocaleString()} km²`
+        content: `${displayContinent}
+🌍 Countries: ${stats.count}
+👥 Population: ${stats.population.toLocaleString()}
+📏 Area: ${stats.area.toLocaleString()} km²`
       });
+    } else {
+      console.warn(`No stats found for continent: ${displayContinent}`);
     }
   };
 
@@ -74,14 +136,16 @@ function WorldMap() {
   };
 
   return (
-    <div className="world-map-container" style={{ width: "80%", height: "60%", margin: "0 auto", position: "relative" }}>
+    <div className="world-map-container">
       <ComposableMap projection="geoEqualEarth">
         <Geographies geography={geoUrl}>
           {({ geographies }) =>
             geographies.map(geo => {
+              console.log("Geo Properties:", geo.properties); // Debug log
               const continent = getDisplayContinent(
                 geo.properties.CONTINENT || geo.properties.continent || geo.properties.name
               );
+              console.log("Mapped Continent:", continent); // Debug mapped continent
               return (
                 <Geography
                   key={geo.rsmKey}
@@ -124,10 +188,19 @@ function WorldMap() {
           className="world-map-tooltip"
           style={{
             left: tooltip.x + 15,
-            top: tooltip.y + 15,
+            top: tooltip.y + 15
           }}
         >
-          {tooltip.content}
+          <div className="tooltip-title">
+            {tooltip.content.split('\n')[0]}
+          </div>
+          <div className="tooltip-content">
+            {tooltip.content.split('\n').slice(1).map((line, index) => (
+              <div key={index} className="continent-statistics">
+                {line}
+              </div>
+            ))}
+          </div>
         </div>
       )}
     </div>
