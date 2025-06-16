@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
+import "./gamesCss/FlagGuess.css";
 
 function getRandomInt(max) {
   return Math.floor(Math.random() * max);
@@ -17,28 +18,28 @@ function FlagGuess() {
   const [timer, setTimer] = useState(10);
   const [wrongCount, setWrongCount] = useState(0);
   const [gameOver, setGameOver] = useState(false);
+  const [gameStarted, setGameStarted] = useState(false); // New state for game start
   const timerRef = useRef();
 
   // Fetch country data
   useEffect(() => {
-    fetch("https://restcountries.com/v3.1/all")
-      .then(res => res.json())
-      .then(data => {
+    fetch("https://restcountries.com/v3.1/all?fields=name,flags,cca3")
+      .then((res) => res.json())
+      .then((data) => {
         setCountries(data);
-        generateQuestion(data);
       });
   }, []);
 
   // Timer effect
   useEffect(() => {
-    if (gameOver || !question) return;
+    if (!gameStarted || gameOver || !question) return;
     if (timer === 0) {
       handleGuess(null); // treat as wrong
       return;
     }
-    timerRef.current = setTimeout(() => setTimer(t => t - 1), 1000);
+    timerRef.current = setTimeout(() => setTimer((t) => t - 1), 1000);
     return () => clearTimeout(timerRef.current);
-  }, [timer, question, gameOver]);
+  }, [timer, question, gameOver, gameStarted]);
 
   // Generate a new question
   const generateQuestion = (data = countries) => {
@@ -50,7 +51,7 @@ function FlagGuess() {
     let options = [correctCountry];
     while (options.length < 4) {
       const randomCountry = data[getRandomInt(data.length)];
-      if (!options.some(c => c.cca3 === randomCountry.cca3)) {
+      if (!options.some((c) => c.cca3 === randomCountry.cca3)) {
         options.push(randomCountry);
       }
     }
@@ -83,17 +84,34 @@ function FlagGuess() {
     setGameOver(false);
     setTimer(10);
     setSelected(null);
+    setGameStarted(false); // Reset game start
+    setQuestion(null);
+  };
+
+  const handleStartGame = () => {
+    setGameStarted(true);
     generateQuestion();
   };
 
-  if (!question) return <div>Loading...</div>;
+  if (!gameStarted) {
+    return (
+      <div className="flag-guess-container">
+        <h2 className="flag-guess-title">Flag Guess Game</h2>
+        <button className="start-game-button" onClick={handleStartGame}>
+          Start Game
+        </button>
+      </div>
+    );
+  }
+
+  if (!question) return <div className="loading">Loading...</div>;
 
   if (gameOver) {
     return (
-      <div style={{ maxWidth: 400, margin: "40px auto", textAlign: "center", background: "#fff", borderRadius: 16, boxShadow: "0 4px 24px rgba(0,0,0,0.08)", padding: 32 }}>
+      <div className="flag-guess-container">
         <h2>Game Over</h2>
         <p>Your score: <b>{score}</b></p>
-        <button onClick={handleRestart} style={{ marginTop: 20, padding: "10px 24px", borderRadius: 8, fontSize: "1.1em", background: "#b7e4c7", border: "none", fontWeight: "bold", cursor: "pointer" }}>
+        <button className="restart-button" onClick={handleRestart}>
           Restart
         </button>
       </div>
@@ -101,44 +119,33 @@ function FlagGuess() {
   }
 
   return (
-    <div style={{ maxWidth: 400, margin: "40px auto", textAlign: "center", background: "#fff", borderRadius: 16, boxShadow: "0 4px 24px rgba(0,0,0,0.08)", padding: 32 }}>
-      <h2>Flag Guess Game</h2>
-      <p>Score: {score} &nbsp; | &nbsp; ❌ {wrongCount} / 3</p>
-      <p style={{ fontWeight: "bold", color: timer <= 3 ? "#e63946" : "#222" }}>Time: {timer}s</p>
-      <img src={question.flags.png} alt="Flag" style={{ width: 200, height: 120, objectFit: "contain", borderRadius: 8, margin: "20px 0" }} />
-      <div>
-        {choices.map(country => (
+    <div className="flag-guess-container">
+      <h2 className="flag-guess-title">Flag Guess Game</h2>
+      <p className="score-info">Score: {score} &nbsp; | &nbsp; ❌ {wrongCount} / 3</p>
+      <p className={`timer ${timer <= 3 ? "timer-warning" : ""}`}>Time: {timer}s</p>
+      <img className="flag-image" src={question.flags.png} alt="Flag" />
+      <div className="choices-container">
+        {choices.map((country) => (
           <button
             key={country.cca3}
             onClick={() => handleGuess(country)}
             disabled={!!selected}
-            style={{
-              display: "block",
-              width: "100%",
-              margin: "10px 0",
-              padding: "12px",
-              borderRadius: 8,
-              border: "2px solid #eee",
-              background: selected
+            className={`choice-button ${
+              selected
                 ? country.cca3 === question.cca3
-                  ? "#b7e4c7"
+                  ? "correct-choice"
                   : country.cca3 === (selected.cca3 || "")
-                  ? "#ffb4a2"
-                  : "#fff"
-                : "#fff",
-              color: "#333",
-              fontWeight: "bold",
-              cursor: selected ? "not-allowed" : "pointer",
-              fontSize: "1.1em",
-              transition: "background 0.2s, border 0.2s"
-            }}
+                  ? "wrong-choice"
+                  : ""
+                : ""
+            }`}
           >
             {country.name.common}
           </button>
         ))}
       </div>
       {selected && (
-        <div style={{ marginTop: 16, fontWeight: "bold" }}>
+        <div className="result-message">
           {selected.cca3 === question.cca3
             ? "Correct! 🎉"
             : `Wrong! The answer was ${question.name.common}.`}
