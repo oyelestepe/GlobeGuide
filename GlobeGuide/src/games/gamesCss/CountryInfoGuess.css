@@ -1,117 +1,172 @@
 .country-info-guess-container {
-  max-width: 420px;
-  margin: 48px auto;
+  max-width: 480px;
+  margin: 50px auto;
   text-align: center;
-  background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
-  border-radius: 24px;
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
-  padding: 40px 28px 32px 28px;
-  position: relative;
-  overflow: hidden;
-  font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
-  animation: fadeIn 0.7s;
+  background: linear-gradient(135deg, #ffffff 0%, #f0f4ff 100%);
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  padding: 40px 30px;
+  font-family: 'Poppins', Arial, sans-serif;
+  animation: fadeIn 0.7s ease-in-out;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(30px);}
-  to { opacity: 1; transform: translateY(0);}
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
+/* Title Styling */
 .country-info-guess-container h2 {
-  font-size: 2em;
-  margin-bottom: 12px;
+  font-size: 2rem;
+  margin-bottom: 20px;
   color: #2d314d;
+  font-weight: 700;
   letter-spacing: 1px;
 }
 
+/* Score Styling */
 .country-info-guess-score {
-  font-size: 1.15em;
-  margin-bottom: 18px;
+  font-size: 1.2rem;
+  margin-bottom: 20px;
   color: #3a506b;
   font-weight: 600;
 }
 
+/* Clues Section */
 .country-info-guess-clues {
-  margin: 24px 0 18px 0;
+  margin: 20px 0;
   text-align: left;
-  background: rgba(255,255,255,0.7);
+  background: rgba(255, 255, 255, 0.9);
   border-radius: 12px;
-  padding: 18px 18px 8px 18px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .country-info-guess-clues p {
-  margin: 0 0 10px 0;
-  font-size: 1.08em;
+  margin: 0 0 12px 0;
+  font-size: 1rem;
   color: #22223b;
+  line-height: 1.5;
 }
 
-.country-info-guess input[type="text"] {
-  width: 92%;
+.new-clue {
+  animation: fadeIn 0.5s ease-in-out;
+  color: #1976d2;
+  font-weight: bold;
+}
+
+/* Input Field */
+.country-info-guess-input {
+  width: 90%;
   padding: 12px;
-  border-radius: 10px;
+  border-radius: 8px;
   border: 1.5px solid #bfc9d1;
-  font-size: 1.13em;
-  margin-bottom: 12px;
-  background: #f7faff;
-  transition: border 0.2s;
+  font-size: 1rem;
+  margin-bottom: 16px;
+  background: #f9fbff;
+  transition: border 0.3s ease;
 }
 
-.country-info-guess input[type="text"]:focus {
+.country-info-guess-input:focus {
   border: 1.5px solid #5e60ce;
   outline: none;
+  background: #ffffff;
 }
 
-.country-info-guess button,
-.country-info-guess .next-btn {
+/* Buttons */
+button {
   padding: 12px 28px;
-  border-radius: 10px;
-  font-size: 1.13em;
-  background: linear-gradient(90deg, #b7e4c7 60%, #57cc99 100%);
-  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
   font-weight: bold;
-  color: #22223b;
   cursor: pointer;
-  margin-top: 6px;
-  margin-bottom: 0;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-  transition: background 0.2s, transform 0.1s;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.country-info-guess button:active,
-.country-info-guess .next-btn:active {
+.country-info-guess-btn {
+  background: linear-gradient(90deg, #57cc99 60%, #38a169 100%);
+  color: white;
+  border: none;
+}
+
+.country-info-guess-btn:hover {
+  background: linear-gradient(90deg, #38a169 60%, #57cc99 100%);
+}
+
+.hint-btn {
+  background: linear-gradient(90deg, #ffdd57 60%, #f4a261 100%);
+  color: #22223b;
+  border: none;
+  margin-top: 12px;
+}
+
+.hint-btn:hover {
+  background: linear-gradient(90deg, #f4a261 60%, #ffdd57 100%);
+}
+
+.restart-btn {
+  background: #e0eafc;
+  color: #3a506b;
+  border: none;
+  margin-top: 20px;
+}
+
+.restart-btn:hover {
+  background: #d0e6fa;
+}
+
+.next-btn {
+  background: linear-gradient(90deg, #b7e4c7 60%, #57cc99 100%);
+  color: white;
+  border: none;
+  margin-top: 20px;
+}
+
+.next-btn:hover {
   background: linear-gradient(90deg, #57cc99 60%, #b7e4c7 100%);
-  transform: scale(0.98);
 }
 
-.country-info-guess .wrong-count {
-  margin-top: 18px;
+/* Feedback Message */
+.feedback {
+  margin-top: 16px;
+  font-size: 1.1rem;
+  color: #e63946;
+  font-weight: bold;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Wrong Guess Counter */
+.wrong-count {
+  margin-top: 16px;
   color: #e63946;
   font-weight: 600;
-  font-size: 1.08em;
+  font-size: 1rem;
 }
 
-.country-info-guess .answer-reveal {
-  margin-top: 18px;
+/* Answer Reveal */
+.answer-reveal {
+  margin-top: 20px;
   font-weight: bold;
   color: #e63946;
-  font-size: 1.15em;
+  font-size: 1.2rem;
   letter-spacing: 0.5px;
 }
 
-.country-info-guess .restart-btn {
-  margin-top: 28px;
-  padding: 8px 22px;
-  border-radius: 8px;
-  font-size: 1em;
-  background: #eee;
-  border: none;
-  font-weight: bold;
-  color: #3a506b;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.country-info-guess .restart-btn:hover {
-  background: #d0e6fa;
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

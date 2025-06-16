@@ -1,5 +1,6 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import "./gamesCss/CountryInfoGuess.css";
+
 function getRandomInt(max) {
   return Math.floor(Math.random() * max);
 }
@@ -32,11 +33,12 @@ function CountryInfoGuess() {
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
   const [revealed, setRevealed] = useState(false);
+  const [feedback, setFeedback] = useState(""); // Feedback for wrong guesses
 
   useEffect(() => {
-    fetch("https://restcountries.com/v3.1/all")
-      .then(res => res.json())
-      .then(data => {
+    fetch("https://restcountries.com/v3.1/all?fields=name,region,subregion,population,area,languages,currencies,borders,demonym,flags")
+      .then((res) => res.json())
+      .then((data) => {
         setCountries(data);
         startNewQuestion(data);
       });
@@ -51,6 +53,7 @@ function CountryInfoGuess() {
     setGuess("");
     setWrongCount(0);
     setRevealed(false);
+    setFeedback(""); // Reset feedback
   };
 
   const handleGuess = (e) => {
@@ -60,27 +63,28 @@ function CountryInfoGuess() {
 
     if (
       normalize(guess) === normalize(question.name.common) ||
-      (question.altSpellings && question.altSpellings.some(a => normalize(a) === normalize(guess))) ||
+      (question.altSpellings && question.altSpellings.some((a) => normalize(a) === normalize(guess))) ||
       normalize(question.name.common).includes(normalize(guess))
     ) {
       setScore(score + 1);
+      setFeedback("Correct! 🎉");
       setTimeout(() => startNewQuestion(), 1200);
     } else {
       const newWrong = wrongCount + 1;
       setWrongCount(newWrong);
-      if (newWrong >= 5) {
+      setFeedback("Wrong guess! Try again.");
+      if (newWrong >= 3) { // Reduced guesses to 3
         setRevealed(true);
         setTimeout(() => startNewQuestion(), 2500);
-      } else if (newWrong === 4 && question.flags && question.flags.png) {
-        setShownClues([
-          ...clues.slice(0, newWrong + 1),
-          <span key="flag"><b>Flag:</b> <img src={question.flags.png} alt="flag" style={{width: 60, verticalAlign: "middle"}} /></span>
-        ]);
-      } else {
-        setShownClues(clues.slice(0, Math.min(clues.length, newWrong + 2)));
       }
     }
     setGuess("");
+  };
+
+  const handleHintRequest = () => {
+    if (shownClues.length < clues.length) {
+      setShownClues(clues.slice(0, shownClues.length + 1)); // Show one more clue
+    }
   };
 
   const handleRestart = () => {
@@ -90,15 +94,17 @@ function CountryInfoGuess() {
     startNewQuestion();
   };
 
-  if (!question) return <div>Loading...</div>;
+  if (!question) return <div className="loading">Loading...</div>;
 
   return (
-    <div className="country-info-guess-container country-info-guess" style={{ maxWidth: 400, margin: "40px auto", textAlign: "center", background: "#fff", borderRadius: 16, boxShadow: "0 4px 24px rgba(0,0,0,0.08)", padding: 32 }}>
-      <h2>Country Info Guess</h2>
-      <p>Score: {score}</p>
-      <div style={{ margin: "20px 0", textAlign: "left" }}>
+    <div className="country-info-guess-container">
+      <h2 className="country-info-guess-title">Country Info Guess</h2>
+      <p className="country-info-guess-score">Score: {score}</p>
+      <div className="country-info-guess-clues">
         {shownClues.map((clue, idx) => (
-          <p key={idx}><b>Clue {idx + 1}:</b> {clue}</p>
+          <p key={idx} className={idx === shownClues.length - 1 ? "new-clue" : ""}>
+            <b>Clue {idx + 1}:</b> {clue}
+          </p>
         ))}
       </div>
       {!revealed ? (
@@ -106,77 +112,31 @@ function CountryInfoGuess() {
           <input
             type="text"
             value={guess}
-            onChange={e => setGuess(e.target.value)}
+            onChange={(e) => setGuess(e.target.value)}
             placeholder="Type your guess..."
-            style={{
-              width: "90%",
-              padding: "10px",
-              borderRadius: 8,
-              border: "1.5px solid #bbb",
-              fontSize: "1.1em",
-              marginBottom: 10
-            }}
-            disabled={revealed}
+            className="country-info-guess-input"
             autoFocus
           />
-          <br />
-          <button
-            type="submit"
-            style={{
-              padding: "10px 24px",
-              borderRadius: 8,
-              fontSize: "1.1em",
-              background: "#b7e4c7",
-              border: "none",
-              fontWeight: "bold",
-              cursor: "pointer"
-            }}
-            disabled={revealed}
-          >
+          <button type="submit" className="country-info-guess-btn">
             Guess
           </button>
         </form>
       ) : (
-        <div style={{ marginTop: 16, fontWeight: "bold", color: "#e63946" }}>
-          The answer was: {question.name.common}
-        </div>
+        <div className="answer-reveal">The answer was: {question.name.common}</div>
       )}
-      <div style={{ marginTop: 16, color: "#e63946" }}>
-        Wrong guesses: {wrongCount} / 5
-      </div>
+      <button onClick={handleHintRequest} className="hint-btn">
+        Request Hint
+      </button>
+      <div className="wrong-count">Wrong guesses: {wrongCount} / 3</div>
+      {feedback && <div className="feedback">{feedback}</div>}
       {revealed && (
-        <button
-          onClick={startNewQuestion}
-          style={{
-            marginTop: 20,
-            padding: "10px 24px",
-            borderRadius: 8,
-            fontSize: "1.1em",
-            background: "#b7e4c7",
-            border: "none",
-            fontWeight: "bold",
-            cursor: "pointer"
-          }}
-        >
+        <button onClick={startNewQuestion} className="next-btn">
           Next
         </button>
       )}
-      <div style={{ marginTop: 24 }}>
-        <button
-          onClick={handleRestart}
-          style={{
-            padding: "6px 18px",
-            borderRadius: 8,
-            fontSize: "1em",
-            background: "#eee",
-            border: "none",
-            fontWeight: "bold",
-            cursor: "pointer"
-          }}
-        >
-          Restart Game
-        </button>
-      </div>
+      <button onClick={handleRestart} className="restart-btn">
+        Restart Game
+      </button>
     </div>
   );
 }
