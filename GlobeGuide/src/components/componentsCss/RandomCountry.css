@@ -1,41 +1,102 @@
-.country-card {
-  max-width: 300px;
-  margin: 20px auto;
-  background: #ffffff;
+/* Container Styling */
+.country-day-container {
+  font-family: 'Poppins', Arial, sans-serif;
+  padding: 20px;
+  max-width: 900px;
+  margin: auto;
+  text-align: center;
+  background: linear-gradient(135deg, #ffffff, #f9f9f9);
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  text-align: center;
-  font-family: 'Poppins', sans-serif;
+}
+
+/* Title Styling */
+.country-title {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  color: #2d314d;
+  font-weight: 600;
+}
+
+.country-title span {
+  color: #1976d2;
+  font-weight: bold;
+}
+
+/* Flag and Neighbors Section */
+.flag-and-neighbors {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+/* Main Flag Styling */
+.main-flag img {
+  width: 250px;
+  height: 160px;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.country-card:hover {
-  transform: translateY(-5px);
+.main-flag img:hover {
+  transform: scale(1.05);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
 }
 
-.country-card-flag {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
+/* Neighbor Flags Section */
+.neighbor-flags {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
 }
 
-.country-card-name {
-  font-size: 1.5em;
-  margin: 10px 0;
+.neighbor-flag img {
+  width: 100px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.neighbor-flag img:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Facts Section */
+.facts {
+  margin-top: 30px;
+  text-align: left;
+  max-width: 600px;
+  margin-inline: auto;
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.facts p {
+  font-size: 1rem;
+  margin: 8px 0;
+  color: #333;
+  line-height: 1.5;
+}
+
+.facts p strong {
   color: #1976d2;
 }
 
-.country-card-info {
-  font-size: 0.9em;
-  color: #555;
-  margin: 5px 0;
-}
-
-.country-card-loading {
+/* Loading State */
+.loading {
   text-align: center;
-  font-size: 1.2em;
+  padding: 40px;
+  font-size: 1.2rem;
   color: #555;
-  padding: 20px;
 }
