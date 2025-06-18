@@ -15,8 +15,7 @@ function FindCountryOnMap() {
   const [loading, setLoading] = useState(true);
   const [tries, setTries] = useState(0);
   const [revealed, setRevealed] = useState(false);
-  const [status, setStatus] = useState(null);
-  const [wrongGuesses, setWrongGuesses] = useState([]);
+  const [countryStatus, setCountryStatus] = useState({}); // Track the status of each country
 
   useEffect(() => {
     fetch(geoUrl)
@@ -29,6 +28,7 @@ function FindCountryOnMap() {
         setGeoData(geoJsonData);
         setLoading(false);
 
+        // Select a random target country
         const randomFeature =
           geoJsonData.features[Math.floor(Math.random() * geoJsonData.features.length)];
 
@@ -58,8 +58,6 @@ function FindCountryOnMap() {
         setTarget(newTarget);
         setTries(0);
         setRevealed(false);
-        setStatus(null);
-        setWrongGuesses([]);
       }, 2000);
 
       return () => clearTimeout(timeout);
@@ -72,14 +70,19 @@ function FindCountryOnMap() {
     if (revealed) return;
 
     if (clickedCountryCode.toUpperCase() === (target?.cca3 || "").toUpperCase()) {
-      setStatus("correct");
+      setCountryStatus((prev) => ({
+        ...prev,
+        [clickedCountryCode]: "correct", // Mark the country as correct
+      }));
       setRevealed(true);
     } else {
       setTries((prev) => prev + 1);
-      setWrongGuesses((prev) => [...prev, clickedCountryCode]);
 
       if (tries + 1 >= 3) {
-        setStatus("incorrect");
+        setCountryStatus((prev) => ({
+          ...prev,
+          [target?.cca3 || "UNKNOWN"]: "incorrect", // Mark the target country as incorrect
+        }));
         setRevealed(true);
       }
     }
@@ -140,8 +143,7 @@ function FindCountryOnMap() {
               {({ geographies }) =>
                 geographies.map((geo) => {
                   const geoCode = geo.id || "UNKNOWN";
-                  const isTarget = geoCode === (target?.cca3 || "UNKNOWN");
-                  const isWrongGuess = wrongGuesses.includes(geoCode);
+                  const status = countryStatus[geoCode]; // Get the status of the country
 
                   return (
                     <Geography
@@ -150,15 +152,11 @@ function FindCountryOnMap() {
                       onClick={() => handleCountryClick(geo)}
                       style={{
                         default: {
-                          fill: revealed
-                            ? isTarget
-                              ? status === "correct"
-                                ? "#43a047" // green
-                                : "#e63946" // red (missed correct answer)
-                              : isWrongGuess
-                              ? "#e63946" // red for wrong guesses
-                              : "#D6D6DA"
-                            : "#D6D6DA",
+                          fill: status === "correct"
+                            ? "#43a047" // Green for correct guesses
+                            : status === "incorrect"
+                            ? "#e63946" // Red for incorrect guesses
+                            : "#D6D6DA", // Default color
                           outline: "none",
                         },
                         hover: {
