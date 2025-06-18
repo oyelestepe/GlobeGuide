@@ -16,6 +16,8 @@ function FindCountryOnMap() {
   const [tries, setTries] = useState(0);
   const [revealed, setRevealed] = useState(false);
   const [countryStatus, setCountryStatus] = useState({}); // Track the status of each country
+  const [askedCountries, setAskedCountries] = useState(new Set()); // Track countries that have been asked
+  const [status, setStatus] = useState(""); // Track the status message
 
   useEffect(() => {
     fetch(geoUrl)
@@ -28,15 +30,8 @@ function FindCountryOnMap() {
         setGeoData(geoJsonData);
         setLoading(false);
 
-        // Select a random target country
-        const randomFeature =
-          geoJsonData.features[Math.floor(Math.random() * geoJsonData.features.length)];
-
-        const targetCountry = {
-          name: { common: randomFeature.properties.name || "Unknown" },
-          cca3: randomFeature.id || "UNKNOWN",
-        };
-        setTarget(targetCountry);
+        // Start the first round
+        selectNewTarget(geoJsonData, new Set());
       })
       .catch((error) => {
         console.error("Error fetching GeoJSON:", error);
@@ -44,30 +39,33 @@ function FindCountryOnMap() {
       });
   }, []);
 
-  useEffect(() => {
-    if (revealed && geoData) {
-      const timeout = setTimeout(() => {
-        const randomFeature =
-          geoData.features[Math.floor(Math.random() * geoData.features.length)];
+  const selectNewTarget = (geoJsonData, askedCountriesSet) => {
+    const remainingCountries = geoJsonData.features.filter(
+      (feature) => !askedCountriesSet.has(feature.id || "UNKNOWN")
+    );
 
-        const newTarget = {
-          name: { common: randomFeature.properties.name || "Unknown" },
-          cca3: randomFeature.id || "UNKNOWN",
-        };
-
-        setTarget(newTarget);
-        setTries(0);
-        setRevealed(false);
-      }, 2000);
-
-      return () => clearTimeout(timeout);
+    if (remainingCountries.length === 0) {
+      alert("All countries have been asked!");
+      return;
     }
-  }, [revealed, geoData]);
+
+    const randomFeature = remainingCountries[Math.floor(Math.random() * remainingCountries.length)];
+    const newTarget = {
+      name: { common: randomFeature.properties.name || "Unknown" },
+      cca3: randomFeature.id || "UNKNOWN",
+    };
+
+    setTarget(newTarget);
+    setAskedCountries((prev) => new Set(prev).add(newTarget.cca3));
+    setTries(0);
+    setRevealed(false);
+    setStatus(""); // Reset status message
+  };
 
   const handleCountryClick = (geo) => {
     const clickedCountryCode = geo.id || "UNKNOWN";
 
-    if (revealed) return;
+    if (revealed || countryStatus[clickedCountryCode]) return; // Do nothing if revealed or already marked
 
     if (clickedCountryCode.toUpperCase() === (target?.cca3 || "").toUpperCase()) {
       setCountryStatus((prev) => ({
@@ -75,6 +73,12 @@ function FindCountryOnMap() {
         [clickedCountryCode]: "correct", // Mark the country as correct
       }));
       setRevealed(true);
+      setStatus("correct"); // Set status message to correct
+
+      // Start a new round after a short delay
+      setTimeout(() => {
+        selectNewTarget(geoData, askedCountries);
+      }, 2000);
     } else {
       setTries((prev) => prev + 1);
 
@@ -84,6 +88,12 @@ function FindCountryOnMap() {
           [target?.cca3 || "UNKNOWN"]: "incorrect", // Mark the target country as incorrect
         }));
         setRevealed(true);
+        setStatus("incorrect"); // Set status message to incorrect
+
+        // Start a new round after a short delay
+        setTimeout(() => {
+          selectNewTarget(geoData, askedCountries);
+        }, 2000);
       }
     }
   };
@@ -120,7 +130,6 @@ function FindCountryOnMap() {
         Find: <b className="target-country-name">{target.name.common}</b>
       </p>
       <p className="game-stats">Tries: {tries} / 3</p>
-
       <div className="map-container">
         <div className="zoom-controls">
           <button className="zoom-button" onClick={handleZoomIn}>
@@ -153,18 +162,22 @@ function FindCountryOnMap() {
                       style={{
                         default: {
                           fill: status === "correct"
-                            ? "#43a047" // Green for correct guesses
+                            ? "#43a047" // correct guesses
                             : status === "incorrect"
-                            ? "#e63946" // Red for incorrect guesses
+                            ? "#e63946" // incorrect guesses
                             : "#D6D6DA", // Default color
+                          stroke: "#888", // Add borders
+                          strokeWidth: 0.5, // Border thickness
                           outline: "none",
                         },
                         hover: {
-                          fill: "#F53",
+                          fill: status ? "#D6D6DA" : "#90caf9", // Highlight on hover if not already marked
+                          stroke: "#555", // Darker border on hover
+                          strokeWidth: 1, // Thicker border on hover
                           outline: "none",
                         },
                         pressed: {
-                          fill: "#E42",
+                          fill: "#E42", // Highlight on click
                           outline: "none",
                         },
                       }}
@@ -176,6 +189,15 @@ function FindCountryOnMap() {
           </ZoomableGroup>
         </ComposableMap>
       </div>
+
+      <p className={`feedback-message ${status}`}>
+        {status === "correct" && "Correct! Well done!"}
+        {status === "incorrect" && "Incorrect! The correct country was highlighted."}
+      </p>
+
+      <button className="restart-button" onClick={() => window.location.reload()}>
+        Restart Game
+      </button>
     </div>
   );
 }

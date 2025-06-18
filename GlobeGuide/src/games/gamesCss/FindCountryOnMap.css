@@ -35,14 +35,20 @@
 .map-container {
   margin: 0 auto;
   width: 100%;
-  max-width: 800px;
-  background: #fff;
+  max-width: 900px;
+  background: linear-gradient(135deg, #e3f2fd, #bbdefb);
   border-radius: 18px;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
   padding: 18px;
   position: relative;
   overflow: hidden;
   aspect-ratio: 2 / 1;
+}
+
+.geography:hover {
+  fill: #90caf9 !important; /* Highlight on hover */
+  cursor: pointer;
+  transition: fill 0.2s ease;
 }
 
 .zoom-controls {
@@ -87,4 +93,57 @@
   height: 100vh;
   font-size: 20px;
   color: #e63946;
+}
+
+.feedback-message {
+  font-size: 18px;
+  margin: 16px 0;
+  font-weight: bold;
+  text-align: center;
+}
+
+.feedback-message.correct {
+  color: #43a047;
+}
+
+.feedback-message.incorrect {
+  color: #e63946;
+}
+
+.restart-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.restart-button:hover {
+  background-color: #1565c0;
+}
+
+@media (max-width: 600px) {
+  .find-country-container {
+    padding: 16px;
+  }
+
+  .map-container {
+    max-width: 100%;
+    padding: 12px;
+  }
+
+  .zoom-controls {
+    right: 10px;
+    top: 10px;
+  }
+
+  .zoom-button {
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+  }
 }
