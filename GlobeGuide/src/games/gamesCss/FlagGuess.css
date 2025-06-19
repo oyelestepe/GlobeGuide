@@ -97,3 +97,87 @@
   color: #555;
   padding: 20px;
 }
+
+.region-selector {
+  margin-bottom: 20px;
+  font-size: 1rem;
+}
+
+.region-selector label {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.region-selector select {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+/* Add fade-in and fade-out animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.fade-out {
+  animation: fadeOut 0.5s ease-in-out;
+}
+
+/* Card flip animation */
+@keyframes flipIn {
+  from {
+    transform: rotateY(90deg);
+    opacity: 0;
+  }
+  to {
+    transform: rotateY(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes flipOut {
+  from {
+    transform: rotateY(0deg);
+    opacity: 1;
+  }
+  to {
+    transform: rotateY(-90deg);
+    opacity: 0;
+  }
+}
+
+.card {
+  perspective: 1000px;
+}
+
+.flip-in {
+  animation: flipIn 0.5s ease-in-out;
+}
+
+.flip-out {
+  animation: flipOut 0.5s ease-in-out;
+}
