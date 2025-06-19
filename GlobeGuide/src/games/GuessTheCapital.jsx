@@ -144,9 +144,21 @@ function GuessTheCapital() {
       <p className="score-info">
         Score: {score} &nbsp; | &nbsp; ❌ {wrongCount} / 3
       </p>
-      <p className={`timer ${timer <= 3 ? "timer-warning" : ""}`}>
-        Time Left: {timer}s
-      </p>
+      <div className="progress-bar-container">
+        <div
+          className="progress-bar"
+          style={{
+            width: `${(askedCapitals.size / countries.length) * 100}%`,
+          }}
+        ></div>
+      </div>
+      <div className="timer-bar-container">
+        <div
+          className={`timer-bar ${timer <= 3 ? "timer-bar-warning" : ""}`}
+          style={{ width: `${(timer / 10) * 100}%` }}
+        ></div>
+        <span className="timer-bar-label">{timer}s</span>
+      </div>
       <div className="question-container">
         <p className="question">
           What country has the capital <b>{question.capital[0]}</b>?
