@@ -51,7 +51,7 @@ function RandomCountry() {
         </div>
 
         <div className="neighbor-flags">
-          {neighbors.map((neighbor) => (
+          {(Array.isArray(neighbors) ? neighbors : []).map((neighbor) => (
             <div className="neighbor-flag" key={neighbor.name.common}>
               <img src={neighbor.flags.png} alt={neighbor.name.common} title={neighbor.name.common} />
             </div>
