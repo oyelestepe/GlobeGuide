@@ -16,6 +16,7 @@ function Hompage() {
           <WorldMap />
         </div>
       </div>
+
       <div className='homepage-container'>
         <div className='games-intro-section'>
           <h2 className='games-intro-title'>Play & Learn: GlobeGuide Games</h2>
@@ -28,6 +29,12 @@ function Hompage() {
               <h3>Flag Guess</h3>
               <p>Can you match the flag to the country? Test your flag knowledge!</p>
               <a href="/game/flag-guess" className="play-game-btn">Play</a>
+            </div>
+             <div className='game-card'>
+              <img className='game-card-icon' src='geo-duel.png' alt='Geo Duel' />
+              <h3>Geo Duel</h3>
+              <p>Challenge your friends in a head-to-head geography battle!</p>
+              <a href="/game/geo-duel" className="play-game-btn">Play</a>
             </div>
             <div className='game-card'>
               <img className='game-card-icon' src='infoGuess.png' alt='Country Info Guess' />
@@ -49,36 +56,7 @@ function Hompage() {
             </div>
           </div>
         </div>
-  <div className='hompage-text'>
-        <h3 className='homepage-title'>Welcome to GlobeGuide</h3>
-        <p className='homepage-description'>
-          Explore the world through interactive maps and engaging games. Test your knowledge of countries, flags, and geography while having fun!
-        </p>
-      </div>
-        <div className='games-section'>
-        <div className='first-row'>
-          <div className='games-wrapper'>
-            <img className='games-img' src='https://picsum.photos/200/300'></img>
-            <p className='games-p'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut in ex ut elit aliquet auctor vitae eu sem. Morbi et.</p>
-          </div>
 
-          <div className='games-wrapper'>
-            <img className='games-img' src='https://picsum.photos/200/300'></img>
-            <p className='games-p'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut in ex ut elit aliquet auctor vitae eu sem. Morbi et.</p>
-          </div>
-        </div>
-        <div className='second-row'>
-          <div className='games-wrapper'>
-            <img className='games-img' src='https://picsum.photos/200/300'></img>
-            <p className='games-p'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut in ex ut elit aliquet auctor vitae eu sem. Morbi et.</p>
-          </div>
-
-          <div className='games-wrapper'>
-            <img className='games-img' src='https://picsum.photos/200/300'></img>
-            <p className='games-p'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut in ex ut elit aliquet auctor vitae eu sem. Morbi et.</p>
-          </div>
-        </div>  
-        </div>
       </div>
       <div className='random-country'>
         <h3 className='random-country-title'>Random Country</h3>
