@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./gamesCss/CountryInfoGuess.css";
-
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 function getRandomInt(max) {
   return Math.floor(Math.random() * max);
 }
@@ -97,6 +98,8 @@ function CountryInfoGuess() {
   if (!question) return <div className="loading">Loading...</div>;
 
   return (
+    <>
+    <Navbar />
     <div className="country-info-guess-container">
       <h2 className="country-info-guess-title">Country Info Guess</h2>
       <p className="country-info-guess-score">Score: {score}</p>
@@ -138,6 +141,9 @@ function CountryInfoGuess() {
         Restart Game
       </button>
     </div>
+    <Footer />
+    </>
+
   );
 }
 

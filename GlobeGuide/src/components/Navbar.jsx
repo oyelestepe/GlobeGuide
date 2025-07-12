@@ -22,10 +22,13 @@ function Navbar() {
               <Link to="/game/country-info-guess">Country Info Guess</Link>
             </li>
             <li className='navbar-li'>
-              <Link to="/game/country-bluff">Country Bluff</Link>
+              <Link to="/game/geo-duel">Geo Duel</Link>
             </li>
             <li className='navbar-li'>
               <Link to="/game/find-country-on-map">Find Country on Map</Link>
+            </li>
+            <li className='navbar-li'>
+              <Link to="/game/guess-the-capital">Guess The Capital</Link>
             </li>
           </ul>
         </li>

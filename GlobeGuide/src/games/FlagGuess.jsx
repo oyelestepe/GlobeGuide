@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import "./gamesCss/FlagGuess.css";
-
+import Navbar from '../components/Navbar';
+import Footer from "../components/Footer";
 function getRandomInt(max) {
   return Math.floor(Math.random() * max);
 }
@@ -130,6 +131,8 @@ function FlagGuess() {
 
   if (!gameStarted) {
     return (
+      <>
+        <Navbar />
       <div className="flag-guess-container">
         <h2 className="flag-guess-title">Flag Guess Game</h2>
         <div className="region-selector">
@@ -151,6 +154,9 @@ function FlagGuess() {
           Start Game
         </button>
       </div>
+      <Footer />
+      </>
+
     );
   }
 
@@ -158,6 +164,8 @@ function FlagGuess() {
 
   if (gameOver) {
     return (
+      <>
+      <Navbar />
       <div className="flag-guess-container">
         <h2>Game Over</h2>
         <p>Your score: <b>{score}</b></p>
@@ -165,10 +173,14 @@ function FlagGuess() {
           Restart
         </button>
       </div>
+      <Footer />
+      </>
     );
   }
 
   return (
+    <>
+      <Navbar />
     <div className="flag-guess-container">
       <h2 className="flag-guess-title">Flag Guess Game</h2>
       <p className="score-info">Score: {score} &nbsp; | &nbsp; ❌ {wrongCount} / 3</p>
@@ -204,6 +216,8 @@ function FlagGuess() {
         </div>
       )}
     </div>
+    <Footer />
+    </>
   );
 }
 

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { ComposableMap, Geographies, Geography, ZoomableGroup } from "react-simple-maps";
 import { feature } from "topojson-client";
 import "./gamesCss/FindCountryOnMap.css";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 const geoUrl = "/data/worldmap.geojson";
 
@@ -124,6 +126,8 @@ function FindCountryOnMap() {
   if (!target) return <div className="error">Error loading game</div>;
 
   return (
+    <>
+    <Navbar />
     <div className="find-country-container">
       <h2 className="game-title">Find the Country</h2>
       <p className="target-country">
@@ -199,6 +203,9 @@ function FindCountryOnMap() {
         Restart Game
       </button>
     </div>
+    <Footer />
+    </>
+
   );
 }
 

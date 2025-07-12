@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-
+import Navbar from '../components/Navbar';
+import Footer from "../components/Footer";
 function getRandomInt(max) {
   return Math.floor(Math.random() * max);
 }
@@ -105,7 +106,9 @@ function GeoDuel() {
   if (pair.length < 2) return <div>Loading...</div>;
 
   return (
-    <div className="country-info-guess-container country-info-guess">
+    <>
+      <Navbar />
+      <div className="country-info-guess-container country-info-guess">
       <h2>Geo Duel</h2>
       <div className="country-info-guess-score">Score: {score}</div>
       <div style={{ margin: "24px 0", fontWeight: "bold" }}>
@@ -143,6 +146,8 @@ function GeoDuel() {
         </div>
       )}
     </div>
+    <Footer />
+    </>
   );
 }
 

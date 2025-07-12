@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import "./gamesCss/GuessTheCapital.css";
-
 function getRandomInt(max) {
   return Math.floor(Math.random() * max);
 }
@@ -116,6 +117,8 @@ function GuessTheCapital() {
 
   if (gameOver) {
     return (
+      <>
+      <Navbar />
       <div className="guess-the-capital-container">
         <h2>Game Over</h2>
         <p>
@@ -125,20 +128,28 @@ function GuessTheCapital() {
           Restart
         </button>
       </div>
+      <Footer />
+      </>
     );
   }
 
   if (!question) {
     return (
+      <>
+      <Navbar />
       <div className="guess-the-capital-container">
         <button className="start-game-button" onClick={generateQuestion}>
           Start Game
         </button>
       </div>
+      <Footer />
+      </>
     );
   }
 
   return (
+    <>
+      <Navbar />
     <div className="guess-the-capital-container">
       <h2 className="guess-the-capital-title">Guess the Country</h2>
       <p className="score-info">
@@ -206,6 +217,8 @@ function GuessTheCapital() {
         </div>
       )}
     </div>
+    <Footer/>
+    </>
   );
 }
 
