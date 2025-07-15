@@ -16,6 +16,13 @@
   font-weight: bold;
   color: white;
   text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.navbar-logo-img {
+  height: 50px;
+  width: auto;
 }
 
 .navbar-ul {
