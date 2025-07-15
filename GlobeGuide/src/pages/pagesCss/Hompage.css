@@ -8,69 +8,6 @@
   background-color: #f0f0f0;
 }
 
-.hompage-text {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.homepage-title {
-  font-size: 36px;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.homepage-description {
-  font-size: 18px;
-  color: #666;
-  text-align: center;
-  max-width: 600px;
-  margin-bottom: 40px;
-}
-
-.games-section {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 80%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-  border-radius: 12px;
-}
-
-.first-row{
-
-}
-
-.second-row {
-
-}
-.games-wrapper {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin: 20px;
-}   
-
-.games-img {
-  width: 350px;
-  height: 350px;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}   
-
-.games-p {
-  font-size: 16px;
-  color: #333;
-  text-align: center;
-  margin-top: 20px;
-}
-
 .random-country {
   display: flex;
   flex-direction: column;
@@ -131,7 +68,6 @@
   align-items: center;
   justify-content: center;
   background: linear-gradient(135deg, #1976d2 60%, #43a047 100%);
-  border-radius: 18px;
   padding: 40px 20px 30px 20px;
   margin-bottom: 40px;
   box-shadow: 0 8px 32px rgba(25, 118, 210, 0.12);
@@ -143,27 +79,34 @@
   margin-bottom: 24px;
 }
 
-.hero-content h1 {
-  font-size: 2.5rem;
+.hero-title {
+  font-size: 2.8rem;
   font-weight: bold;
   margin-bottom: 12px;
+  color: #bfdaf1;
+  background-color: #101010ad;
 }
 
-.hero-content p {
+.hero-text {
   font-size: 1.3rem;
 }
 
-.hero-map {
+.hero-img-div {
   width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
+  max-width: 800px;
+  margin-top: 20px;
 }
 
-/* Add below your existing styles or at the end */
+.hero-img{
+  width: 90%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(25, 118, 210, 0.15);
+}
 
 .games-intro-section {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1500px;
   margin: 48px auto 32px auto;
   text-align: center;
   background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);

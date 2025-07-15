@@ -1,5 +1,4 @@
 import Navbar from '../components/Navbar'
-import WorldMap from './WorldMap'
 import './pagesCss/Hompage.css'
 import Footer from '../components/Footer'
 import RandomCountry from '../components/RandomCountry'
@@ -9,12 +8,12 @@ function Hompage() {
       <Navbar />
       <div className="hero-section">
         <div className="hero-content">
-          <h1>Explore the World with GlobeGuide</h1>
-          <p>Test your geography knowledge and discover new countries and continents!</p>
+          <h1 className='hero-title'>Expand your knowledge with GlobeGuide</h1>
+          <p className='hero-text'>Take your geography knowledge to the next level with fun games. Sign up now for <span style={{backgroundColor:"#cc1b1bff", padding:'5px', borderRadius:'10px'}}>free</span> and get started.</p>
         </div>
-        <div className="hero-map">
-          <WorldMap />
-        </div>
+        <div className="hero-img-div">
+          <img className="hero-img" src="/hero.png" alt="Hero Image" />
+          </div>
       </div>
 
       <div className='homepage-container'>
