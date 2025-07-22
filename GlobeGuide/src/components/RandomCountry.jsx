@@ -48,14 +48,13 @@ function RandomCountry() {
       <div className="flag-and-neighbors">
         <div className="main-flag">
           <img src={country.flags.png} alt={`${country.name.common} flag`} />
-        </div>
-
-        <div className="neighbor-flags">
-          {(Array.isArray(neighbors) ? neighbors : []).map((neighbor) => (
-            <div className="neighbor-flag" key={neighbor.name.common}>
-              <img src={neighbor.flags.png} alt={neighbor.name.common} title={neighbor.name.common} />
-            </div>
-          ))}
+          <div className="neighbor-flags">
+            {(Array.isArray(neighbors) ? neighbors : []).map((neighbor) => (
+              <div className="neighbor-flag" key={neighbor.name.common}>
+                <img src={neighbor.flags.png} alt={neighbor.name.common} title={neighbor.name.common} />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
