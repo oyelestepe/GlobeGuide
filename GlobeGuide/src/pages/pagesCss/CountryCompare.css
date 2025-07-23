@@ -1,0 +1,51 @@
+.country-compare-root {
+  width: 92vw;
+  max-width: 1200px;
+  margin: 32px auto 0 auto;
+  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+  border-radius: 24px;
+  box-shadow: 0 8px 32px rgba(25, 118, 210, 0.10);
+  padding: 32px 18px 38px 18px;
+}
+
+.country-compare-title {
+  text-align: center;
+  font-size: 2.2rem;
+  color: #1976d2;
+  font-weight: bold;
+  margin-bottom: 18px;
+  letter-spacing: 1px;
+}
+
+.country-compare-instruction {
+  text-align: center;
+  font-size: 1.15rem;
+  color: #333;
+  margin-bottom: 18px;
+}
+
+.country-compare-map-wrapper {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 16px rgba(25, 118, 210, 0.08);
+  padding: 18px 8px;
+  margin-bottom: 18px;
+  overflow-x: auto;
+}
+
+.country-compare-selected {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 1.1rem;
+  color: #1976d2;
+  font-weight: 500;
+}
+
+@media (max-width: 900px) {
+  .country-compare-root {
+    padding: 12px 2vw 18px 2vw;
+  }
+  .country-compare-title {
+    font-size: 1.5rem;
+  }
+}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { ComposableMap, Geographies, Geography } from "react-simple-maps";
 import { useNavigate } from 'react-router-dom';
 import './pagesCss/WorldMap.css';
@@ -14,6 +14,15 @@ const continentColors = {
   "Australia": "#FFB6C1",
   "Antarctica": "#E0FFFF"
 };
+
+// Debounce utility (can be moved to a utils file)
+function debounce(fn, delay) {
+  let timer;
+  return function (...args) {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn.apply(this, args), delay);
+  };
+}
 
 function WorldMap() {
   const navigate = useNavigate();
@@ -31,7 +40,6 @@ function WorldMap() {
         }
 
         const data = await response.json();
-        console.log("API Response:", data); // Log the response for debugging
 
         if (!Array.isArray(data)) {
           throw new Error('API response is not an array');
@@ -50,9 +58,8 @@ function WorldMap() {
         });
 
         setContinentStats(stats);
-        console.log("Continent Stats:", stats); // Debug stats
       } catch (err) {
-        console.error("API error:", err.message);
+        // Use error reporting tools or logging libraries for error handling if needed.
 
         // Fallback data in case of API failure
         const fallbackStats = {
@@ -66,7 +73,6 @@ function WorldMap() {
         };
 
         setContinentStats(fallbackStats);
-        console.log("Fallback Stats:", fallbackStats); // Debug fallback stats
 
         setTooltip({
           visible: true,
@@ -121,14 +127,15 @@ function WorldMap() {
 👥 Population: ${stats.population.toLocaleString()}
 📏 Area: ${stats.area.toLocaleString()} km²`
       });
-    } else {
-      console.warn(`No stats found for continent: ${displayContinent}`);
     }
   };
 
-  const handleMouseMove = (event) => {
-    setTooltip(t => ({ ...t, x: event.clientX, y: event.clientY }));
-  };
+  const handleMouseMove = useCallback(
+    debounce((event) => {
+      setTooltip(t => ({ ...t, x: event.clientX, y: event.clientY }));
+    }, 16), // ~60fps
+    []
+  );
 
   const handleMouseLeave = () => {
     setHoveredContinent(null);
@@ -141,11 +148,9 @@ function WorldMap() {
         <Geographies geography={geoUrl}>
           {({ geographies }) =>
             geographies.map(geo => {
-              console.log("Geo Properties:", geo.properties); // Debug log
               const continent = getDisplayContinent(
                 geo.properties.CONTINENT || geo.properties.continent || geo.properties.name
               );
-              console.log("Mapped Continent:", continent); // Debug mapped continent
               return (
                 <Geography
                   key={geo.rsmKey}
@@ -154,28 +159,14 @@ function WorldMap() {
                   onMouseEnter={e => handleMouseEnter(e, continent)}
                   onMouseMove={handleMouseMove}
                   onMouseLeave={handleMouseLeave}
+                  className={`geography-shape${hoveredContinent === continent ? ' hovered' : ''}`}
+                  data-continent={continent}
                   style={{
                     default: {
                       fill: hoveredContinent === continent
                         ? "#F53"
-                        : continentColors[continent] || "#EAEAEC",
-                      stroke: "#FFFFFF",
-                      strokeWidth: 1.5,
-                      outline: "none",
-                      transition: "all 250ms",
-                    },
-                    hover: {
-                      fill: "#F53",
-                      stroke: "#FFFFFF",
-                      strokeWidth: 2,
-                      outline: "none",
-                    },
-                    pressed: {
-                      fill: "#E42",
-                      stroke: "#FFFFFF",
-                      strokeWidth: 2,
-                      outline: "none",
-                    },
+                        : continentColors[continent] || "#EAEAEC"
+                    }
                   }}
                 />
               );
@@ -186,10 +177,7 @@ function WorldMap() {
       {tooltip.visible && (
         <div
           className="world-map-tooltip"
-          style={{
-            left: tooltip.x + 15,
-            top: tooltip.y + 15
-          }}
+          style={{ left: tooltip.x + 15, top: tooltip.y + 15 }}
         >
           <div className="tooltip-title">
             {tooltip.content.split('\n')[0]}
