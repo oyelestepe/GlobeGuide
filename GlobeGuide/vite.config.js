@@ -8,5 +8,9 @@ export default defineConfig({
     fs: {
       allow: ['..']
     }
-  }
+  },
+  build: {
+    outDir: 'dist'
+  },
+  base: './',
 });
