@@ -12,5 +12,5 @@ export default defineConfig({
   build: {
     outDir: 'dist'
   },
-  base: './',
+  base: process.env.VITE_BASE_PATH || '/GlobeGuide',
 });
