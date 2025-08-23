@@ -12,7 +12,7 @@ function Hompage() {
           <p className='hero-text'>Take your geography knowledge to the next level with fun games. Sign up now for <span style={{backgroundColor:"#cc1b1bff", padding:'5px', borderRadius:'10px'}}>free</span> and get started.</p>
         </div>
         <div className="hero-img-div">
-          <img className="hero-img" src="/hero.png" alt="Hero Image" />
+          <img className="hero-img" src="/hero.webp" alt="Hero Image" />
           </div>
       </div>
 
@@ -24,31 +24,31 @@ function Hompage() {
           </p>
           <div className='games-cards-container'>
             <div className='game-card'>
-              <img className='game-card-icon' src='Flag.png' alt='Flag Guess' />
+              <img className='game-card-icon' src='/Flag.webp' alt='Flag Guess' />
               <h3>Flag Guess</h3>
               <p>Can you match the flag to the country? Test your flag knowledge!</p>
               <a href="/game/flag-guess" className="play-game-btn">Play</a>
             </div>
              <div className='game-card'>
-              <img className='game-card-icon' src='geo-duel.png' alt='Geo Duel' />
+              <img className='game-card-icon' src='/geo-duel.webp' alt='Geo Duel' />
               <h3>Geo Duel</h3>
               <p>Challenge your friends in a head-to-head geography battle!</p>
               <a href="/game/geo-duel" className="play-game-btn">Play</a>
             </div>
             <div className='game-card'>
-              <img className='game-card-icon' src='infoGuess.png' alt='Country Info Guess' />
+              <img className='game-card-icon' src='/infoGuess.webp' alt='Country Info Guess' />
               <h3>Country Info Guess</h3>
               <p>Guess the country from clues about its capital, region, and more.</p>
               <a href="/game/country-info-guess" className="play-game-btn">Play</a>
             </div>
             <div className='game-card'>
-              <img className='game-card-icon' src='findOnMap.png' alt='Find Country on Map' />
+              <img className='game-card-icon' src='/findOnMap.webp' alt='Find Country on Map' />
               <h3>Find Country on Map</h3>
               <p>Locate countries on the world map. How well do you know geography?</p>
               <a href="/game/find-country-on-map" className="play-game-btn">Play</a>
             </div>
             <div className='game-card'>
-              <img className='game-card-icon' src='guessTheCapital.png' alt='Guess the Capital' />
+              <img className='game-card-icon' src='guessTheCapital.webp' alt='Guess the Capital' />
               <h3>Guess the Capital</h3>
               <p>Given a capital, can you pick the correct country? Try it now!</p>
               <a href="/game/guess-the-capital" className="play-game-btn">Play</a>

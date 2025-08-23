@@ -7,7 +7,7 @@ function Navbar() {
     <nav className="navbar">
       <div >
         <Link className="navbar-logo" to="/">
-        <img src="/GlobeGuide Logo.png" alt="GlobeGuide Logo" className="navbar-logo-img" />
+        <img src="/GlobeGuide Logo.webp" alt="GlobeGuide Logo" className="navbar-logo-img" />
         GlobeGuide
         </Link>
       </div>
