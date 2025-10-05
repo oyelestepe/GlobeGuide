@@ -63,11 +63,12 @@ function Hompage() {
         <RandomCountry />
       </div>
       <div className='secondary-container'>
-      <img className='secondary-img' src='https://picsum.photos/200/300' alt='GlobeGuide Logo' />
-        <h3 className='secondary-title'>About GlobeGuide</h3>
+        <h3 className='secondary-title'>Play, Learn, and Conquer the Globe</h3>
         <p className='secondary-description'>
-          GlobeGuide is your go-to platform for exploring the world. Whether you're a geography enthusiast or just looking to have some fun, we have something for everyone. Join us on this journey and discover the beauty of our planet!
+          Unlock a new level of knowledge with the ultimate interactive geography game. From pinpointing capital cities to identifying the most obscure flags, our modern, flat-design interface makes learning addictive. Track your progress with score pop-ups, timers, and progress bars, and challenge friends or family in a fun, competitive atmosphere. Turn curiosity into expertise and make the world your playground.
         </p>
+          <img className='secondary-img' src='/con-1.png' alt='GlobeGuide Logo' />
+
       </div>
       <Footer />
     </>
