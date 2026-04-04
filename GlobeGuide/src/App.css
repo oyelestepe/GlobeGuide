@@ -1,85 +1,55 @@
-*{
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-
+.world-map-container {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  border-radius: 24px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  padding: 32px 16px;
+  margin-top: 32px;
+  margin-bottom: 32px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
+.world-map-container:hover {
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
 }
 
-#root {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+.world-map-container svg {
+  border-radius: 16px;
+  background: rgba(30, 41, 59, 0.9);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
 }
 
-main {
-  flex: 1 0 auto;
+.rsm-geography {
+  filter: none;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.rsm-geography:hover {
+  filter: none;
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.world-map-tooltip {
+  position: fixed;
+  background: rgba(30, 41, 59, 0.95);
+  color: #f1f5f9;
+  padding: 12px 20px;
+  border-radius: 12px;
+  pointer-events: none;
+  white-space: pre-line;
+  z-index: 1000;
+  font-size: 0.95em;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  letter-spacing: 0.01em;
+  line-height: 1.6;
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .footer {
   margin-top: auto;
   width: 100%;
-}
-
-body {
-    background-color: #f0f0f0;
-    color: #333;
-}
-
-.world-map-container {
-    background: linear-gradient(135deg, #f8fafc 0%, #e0f7fa 100%);
-    border-radius: 24px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-    padding: 32px 16px;
-    margin-top: 32px;
-    margin-bottom: 32px;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.world-map-container:hover {
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
-}
-
-.world-map-container svg {
-    border-radius: 16px;
-    background: rgba(255, 255, 255, 0.9);
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03);
-}
-
-.rsm-geography {
-    filter: none;
-    transition: all 0.2s ease;
-    outline: none;
-}
-
-.rsm-geography:hover {
-    filter: none;
-    cursor: pointer;
-    opacity: 0.8;
-}
-
-/* Tooltip style override for map */
-.world-map-tooltip {
-    position: fixed;
-    background: rgba(255, 255, 255, 0.95);
-    color: #334155;
-    padding: 12px 20px;
-    border-radius: 12px;
-    pointer-events: none;
-    white-space: pre-line;
-    z-index: 1000;
-    font-size: 0.95em;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-    font-family: 'Poppins', sans-serif;
-    letter-spacing: 0.01em;
-    line-height: 1.6;
-    border: 1px solid rgba(0, 0, 0, 0.05);
 }
