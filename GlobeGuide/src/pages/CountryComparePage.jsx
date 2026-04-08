@@ -1,34 +1,66 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import './pagesCss/CountryComparePage.css';
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+
 function CountryComparePage() {
   const { search } = useLocation();
   const [countries, setCountries] = useState([]);
   const [pair, setPair] = useState([]);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     fetch("https://restcountries.com/v3.1/all?fields=name,flags,cca3,population,area,region,subregion,languages,currencies,borders")
-      .then(res => res.json())
-      .then(data => Array.isArray(data) ? setCountries(data) : setCountries([]));
+      .then(res => {
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+        return res.json();
+      })
+      .then(data => Array.isArray(data) ? setCountries(data) : setCountries([]))
+      .catch((err) => {
+        console.error("Fetch error:", err);
+        setError(true);
+      });
   }, []);
 
   useEffect(() => {
-    if (!Array.isArray(countries)) return;
+    if (!Array.isArray(countries) || countries.length === 0) return;
     const params = new URLSearchParams(search);
     const c1 = params.get("c1");
     const c2 = params.get("c2");
     if (c1 && c2) {
-      const country1 = countries.find(country => country.cca3 === c1);
-      const country2 = countries.find(country => country.cca3 === c2);
+      const findCountry = (code) => {
+        if (!code) return undefined;
+        let c = String(code).toUpperCase();
+        return countries.find(country => 
+          (country.cca3 && country.cca3.toUpperCase() === c) ||
+          (country.name && country.name.common && country.name.common.toUpperCase() === c)
+        );
+      };
+      const country1 = findCountry(c1);
+      const country2 = findCountry(c2);
       if (country1 && country2) {
         setPair([country1, country2]);
+      } else {
+        setError(true);
       }
     }
   }, [search, countries]);
 
-  if (pair.length < 2) return <div>Loading...</div>;
+  if (error) {
+    return (
+      <div className="country-compare-container" style={{ textAlign: "center", paddingTop: "50px", color: "white" }}>
+        <h2>Error loading country data</h2>
+        <p>We couldn't find details for one or both of the selected countries.</p>
+        <button onClick={() => window.history.back()} style={{ marginTop: "20px", padding: "10px 20px", cursor: "pointer", borderRadius: "8px", border: "1px solid #ccc", background: "transparent", color: "white" }}>Go Back</button>
+      </div>
+    );
+  }
+
+  if (pair.length < 2) return <div style={{ textAlign: "center", paddingTop: "50px", fontSize: "1.2rem", color: "white" }}>Loading...</div>;
 
   return (
+    <>
+    <Navbar />
     <div className="country-compare-container">
       <h2>Country Comparison</h2>
       <div className="compare-cards">
@@ -47,6 +79,9 @@ function CountryComparePage() {
         ))}
       </div>
     </div>
+    <Footer />
+    </>
+    
   );
 }
 

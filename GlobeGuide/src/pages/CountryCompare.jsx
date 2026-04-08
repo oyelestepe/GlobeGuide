@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { ComposableMap, Geographies, Geography } from "react-simple-maps";
 import { useNavigate } from 'react-router-dom';
-import './pagesCss/CountryCompare.css';
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 const geoUrl = "/data/worldmap.geojson";
 
@@ -10,7 +11,11 @@ function CountryCompare() {
   const navigate = useNavigate();
 
   const handleCountryClick = (geo) => {
-    const countryCode = geo.properties.ISO_A3 || geo.properties.cca3 || geo.id;
+    let countryCode = geo.properties.ISO_A3 || geo.properties.cca3 || geo.id;
+    if (countryCode === "-99" && geo.properties.name) {
+      countryCode = geo.properties.name;
+    }
+    
     if (selected.length === 0) {
       setSelected([countryCode]);
     } else if (selected.length === 1 && countryCode !== selected[0]) {
@@ -23,6 +28,8 @@ function CountryCompare() {
   };
 
   return (
+    <>
+    <Navbar />
     <div className="country-compare-root">
       <h2 className="country-compare-title">Select two countries to compare</h2>
       <div className="country-compare-instruction">
@@ -73,6 +80,8 @@ function CountryCompare() {
         {selected.length === 1 && <span>Now select another country to compare with <b>{selected[0]}</b>.</span>}
       </div>
     </div>
+    <Footer />
+    </>
   );
 }
 
