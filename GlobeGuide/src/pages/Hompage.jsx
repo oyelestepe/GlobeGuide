@@ -10,7 +10,7 @@ const games = [
     description: 'Can you match the flag to the country? Put your knowledge to the test!',
     emoji: '🏳️',
     path: '/game/flag-guess',
-    img: '/Flag.webp',
+    img: '/flag-guess.png',
     color: 'from-blue-500/20 to-blue-600/10',
     accent: '#38bdf8',
     badge: 'Popular',
@@ -21,7 +21,7 @@ const games = [
     description: 'Challenge your friends in a head-to-head geography battle!',
     emoji: '⚔️',
     path: '/game/geo-duel',
-    img: '/geo-duel.webp',
+    img: '/geo-duel.png',
     color: 'from-red-500/20 to-orange-500/10',
     accent: '#fb923c',
     badge: 'Multiplayer',
@@ -32,7 +32,7 @@ const games = [
     description: 'Guess the country from clues about its capital, region, and more.',
     emoji: '🌍',
     path: '/game/country-info-guess',
-    img: '/infoGuess.webp',
+    img: '/country-info-guess.png',
     color: 'from-green-500/20 to-emerald-500/10',
     accent: '#22d35e',
     badge: 'Educational',
@@ -43,7 +43,7 @@ const games = [
     description: 'Locate countries on the world map. How well do you know geography?',
     emoji: '🗺️',
     path: '/game/find-country-on-map',
-    img: '/findOnMap.webp',
+    img: '/find-on-map.png',
     color: 'from-purple-500/20 to-violet-500/10',
     accent: '#a78bfa',
     badge: 'Visual',
@@ -54,11 +54,22 @@ const games = [
     description: 'Given a capital city, can you pick the correct country? Try it now!',
     emoji: '🏛️',
     path: '/game/guess-the-capital',
-    img: '/guessTheCapital.webp',
+    img: '/guess-the-capital.png',
     color: 'from-yellow-500/20 to-amber-500/10',
     accent: '#fbbf24',
     badge: 'Classic',
   },
+  {
+  id: 'country-compare',
+  title: 'Country Compare',
+  description: 'Which country is bigger? More populated? Compare nations side by side!',
+  emoji: '📊',
+  path: '/country-compare',
+  img: '/country-compare.png',
+  color: 'from-pink-500/20 to-rose-500/10',
+  accent: '#f472b6',
+  badge: 'Compare',
+},
 ];
 
 const features = [
@@ -147,7 +158,7 @@ function Homepage() {
           <div className="mt-16 max-w-3xl mx-auto relative">
             <div className="absolute -inset-1 bg-gradient-to-r from-neon-green/30 via-neon-blue/30 to-neon-purple/30 rounded-3xl blur-lg opacity-60" />
             <img
-              src="/hero.webp"
+              src="/hero.png"
               alt="GlobeGuide gameplay preview"
               className="relative w-full rounded-2xl border border-white/10 shadow-2xl"
             />
@@ -254,36 +265,6 @@ function Homepage() {
                 </div>
               </div>
             ))}
-
-            {/* Country Compare Card */}
-            <div className="group relative card-bg rounded-2xl border border-white/8 hover:border-white/20 overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-card-hover flex flex-col">
-              <div className="absolute top-4 right-4 z-10">
-                <span className="px-2.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-pink-500/20 text-pink-400 border border-pink-500/40">
-                  Compare
-                </span>
-              </div>
-              <div className="relative bg-gradient-to-br from-pink-500/20 to-rose-500/10 p-8 flex items-center justify-center min-h-[160px]">
-                <span className="text-7xl group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-300 inline-block">⚖️</span>
-              </div>
-              <div className="p-6 flex flex-col flex-1">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-xl">📊</span>
-                  <h3 className="text-lg font-bold text-white">Country Compare</h3>
-                </div>
-                <p className="text-sm text-slate-400 leading-relaxed flex-1">
-                  Which country is bigger? More populated? Compare nations side by side!
-                </p>
-                <Link
-                  to="/compare"
-                  className="mt-5 flex items-center justify-center gap-2 w-full py-3 rounded-xl font-bold text-sm text-pink-400 border border-pink-500/30 bg-pink-500/15 hover:bg-pink-500/30 transition-all duration-200 hover:scale-[1.02]"
-                >
-                  Compare Now
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                  </svg>
-                </Link>
-              </div>
-            </div>
           </div>
         </div>
       </section>

@@ -72,7 +72,7 @@ function Navbar() {
             </Link>
 
             <Link
-              to="/compare"
+              to="/country-compare"
               className="px-4 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-white/5 font-medium transition-all duration-200 text-sm"
             >
               Compare
