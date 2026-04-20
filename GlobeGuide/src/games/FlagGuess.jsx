@@ -100,14 +100,14 @@ function FlagGuess() {
   // ── START SCREEN ──
   if (!gameStarted) {
     return (
-      <div className="min-h-screen flex flex-col bg-navy-900 text-white font-sans">
+      <div className="min-h-screen flex flex-col bg-theme-primary text-theme-primary font-sans">
         <Navbar />
         <main className="flex-1 flex items-center justify-center px-4 py-16">
           <div className="w-full max-w-md">
-            <div className="card-bg rounded-3xl border border-white/10 p-10 text-center shadow-2xl">
+            <div className="card-bg rounded-3xl border border-theme-light p-10 text-center shadow-2xl">
               <div className="text-7xl mb-4 animate-float inline-block">🏳️</div>
-              <h1 className="text-3xl font-black mb-2">Flag Guess</h1>
-              <p className="text-slate-400 text-sm mb-8 leading-relaxed">
+              <h1 className="text-3xl font-black mb-2 text-theme-primary">Flag Guess</h1>
+              <p className="text-theme-secondary text-sm mb-8 leading-relaxed">
                 A flag appears you have 10 seconds to pick the right country. 3 wrong answers and it's game over!
               </p>
 
@@ -118,7 +118,7 @@ function FlagGuess() {
                 <select
                   value={region}
                   onChange={(e) => setRegion(e.target.value)}
-                  className="w-full bg-navy-800 border border-white/10 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-neon-blue/50 transition-colors"
+                  className="w-full border border-theme-light text-theme-primary rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-neon-blue/50 transition-colors" style={{ backgroundColor: 'var(--input-bg)' }}
                 >
                   <option value="all">🌍 All Continents</option>
                   <option value="africa">🌍 Africa</option>
@@ -152,12 +152,12 @@ function FlagGuess() {
   // ── LOADING ──
   if (!question) {
     return (
-      <div className="min-h-screen flex flex-col bg-navy-900 text-white font-sans">
+      <div className="min-h-screen flex flex-col bg-theme-primary text-theme-primary font-sans">
         <Navbar />
         <main className="flex-1 flex items-center justify-center">
           <div className="text-center">
             <div className="text-5xl animate-spin-slow mb-4">🌍</div>
-            <p className="text-slate-400">Loading countries…</p>
+            <p className="text-theme-secondary">Loading countries…</p>
           </div>
         </main>
         <Footer />
@@ -168,14 +168,14 @@ function FlagGuess() {
   // ── GAME OVER ──
   if (gameOver) {
     return (
-      <div className="min-h-screen flex flex-col bg-navy-900 text-white font-sans">
+      <div className="min-h-screen flex flex-col bg-theme-primary text-theme-primary font-sans">
         <Navbar />
         <main className="flex-1 flex items-center justify-center px-4 py-16">
           <div className="w-full max-w-md">
-            <div className="card-bg rounded-3xl border border-white/10 p-10 text-center shadow-2xl">
+            <div className="card-bg rounded-3xl border border-theme-light p-10 text-center shadow-2xl">
               <div className="text-7xl mb-4">😵</div>
-              <h2 className="text-3xl font-black mb-2">Game Over!</h2>
-              <p className="text-slate-400 mb-6">You've used all your lives.</p>
+              <h2 className="text-3xl font-black mb-2 text-theme-primary">Game Over!</h2>
+              <p className="text-theme-secondary mb-6">You've used all your lives.</p>
               <div className="glass rounded-2xl p-6 mb-8 border border-neon-blue/20">
                 <p className="text-xs text-neon-blue uppercase font-bold tracking-widest mb-1">Final Score</p>
                 <p className="text-6xl font-black gradient-text">{score}</p>
@@ -200,7 +200,7 @@ function FlagGuess() {
 
   // ── GAME ──
   return (
-    <div className="min-h-screen flex flex-col bg-navy-900 text-white font-sans">
+    <div className="min-h-screen flex flex-col bg-theme-primary text-theme-primary font-sans">
       <Navbar />
       <main className="flex-1 flex items-center justify-center px-4 py-10">
         <div className="w-full max-w-lg">
@@ -229,10 +229,10 @@ function FlagGuess() {
 
           {/* Card */}
           <div
-            className={`card-bg rounded-3xl border border-white/10 overflow-hidden shadow-2xl transition-all duration-300 ${transitioning ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}
+            className={`card-bg rounded-3xl border border-theme-light overflow-hidden shadow-2xl transition-all duration-300 ${transitioning ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}
           >
             {/* Flag area */}
-            <div className="flex items-center justify-center bg-white/5 p-8 min-h-[200px] relative">
+            <div className="flex items-center justify-center p-8 min-h-[200px] relative" style={{ backgroundColor: 'rgba(128,128,128,0.08)' }}>
               <div className="absolute top-3 right-4 text-xs font-bold px-2.5 py-1 rounded-full" style={{ background: `${ACCENT}20`, color: ACCENT, border: `1px solid ${ACCENT}40` }}>
                 {timer}s
               </div>
@@ -245,7 +245,7 @@ function FlagGuess() {
 
             {/* Question */}
             <div className="px-8 py-5">
-              <p className="text-center text-sm font-semibold text-slate-400 mb-4 uppercase tracking-widest">Which country does this flag belong to?</p>
+              <p className="text-center text-sm font-semibold text-theme-secondary mb-4 uppercase tracking-widest">Which country does this flag belong to?</p>
               <div className="grid grid-cols-2 gap-3">
                 {choices.map((country) => {
                   const isCorrect = selected && country.cca3 === question.cca3;
@@ -258,7 +258,7 @@ function FlagGuess() {
                       className={`py-3 px-4 rounded-xl font-semibold text-sm border transition-all duration-200 hover:scale-[1.02] disabled:cursor-not-allowed
                         ${isCorrect ? 'border-neon-green/60 bg-neon-green/15 text-neon-green' :
                           isWrong ? 'border-red-500/60 bg-red-500/15 text-red-400' :
-                          'border-white/10 bg-white/5 text-white hover:border-neon-blue/40 hover:bg-neon-blue/10'}`}
+                          'border-theme-light text-theme-primary hover:border-neon-blue/40 hover:bg-neon-blue/10'}`}
                     >
                       {country.name.common}
                     </button>

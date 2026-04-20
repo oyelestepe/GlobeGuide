@@ -106,12 +106,12 @@ function CountryInfoGuess() {
   // ── LOADING ──
   if (!question) {
     return (
-      <div className="min-h-screen flex flex-col bg-navy-900 text-white font-sans">
+      <div className="min-h-screen flex flex-col bg-theme-primary text-theme-primary font-sans">
         <Navbar />
         <main className="flex-1 flex items-center justify-center">
           <div className="text-center">
             <div className="text-5xl animate-spin-slow mb-4">🌍</div>
-            <p className="text-slate-400">Loading countries…</p>
+            <p className="text-theme-secondary">Loading countries…</p>
           </div>
         </main>
         <Footer />
@@ -120,7 +120,7 @@ function CountryInfoGuess() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-navy-900 text-white font-sans">
+    <div className="min-h-screen flex flex-col bg-theme-primary text-theme-primary font-sans">
       <Navbar />
       <main className="flex-1 flex items-center justify-center px-4 py-10">
         <div className="w-full max-w-xl">
@@ -146,7 +146,7 @@ function CountryInfoGuess() {
           </div>
 
           {/* Card */}
-          <div className={`card-bg rounded-3xl border border-white/10 overflow-hidden shadow-2xl transition-all duration-300 ${transitioning ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}>
+          <div className={`card-bg rounded-3xl border border-theme-light overflow-hidden shadow-2xl transition-all duration-300 ${transitioning ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}>
             {/* Header */}
             <div className="px-7 pt-7 pb-4 border-b border-white/5 flex items-center gap-3">
               <div className="p-2 rounded-xl" style={{ background: `${ACCENT}15` }}>
@@ -154,7 +154,7 @@ function CountryInfoGuess() {
               </div>
               <div>
                 <p className="text-xs uppercase font-bold tracking-widest" style={{ color: ACCENT }}>Country Info Guess</p>
-                <p className="text-xs text-slate-500">Use the clues to identify the mystery country</p>
+                <p className="text-xs text-theme-muted">Use the clues to identify the mystery country</p>
               </div>
             </div>
 
@@ -167,8 +167,8 @@ function CountryInfoGuess() {
                 >
                   <span className="text-lg w-7 text-center flex-shrink-0">{clue.icon}</span>
                   <div>
-                    <p className="text-xs text-slate-500 font-semibold uppercase tracking-wider">{clue.label}</p>
-                    <p className="text-sm font-bold text-white">{clue.value}</p>
+                    <p className="text-xs text-theme-muted font-semibold uppercase tracking-wider">{clue.label}</p>
+                    <p className="text-sm font-bold text-theme-primary">{clue.value}</p>
                   </div>
                   {idx === shownClues.length - 1 && (
                     <span className="ml-auto text-xs font-bold px-2 py-0.5 rounded-full" style={{ background: `${ACCENT}20`, color: ACCENT }}>
@@ -181,7 +181,7 @@ function CountryInfoGuess() {
               {shownClues.length < clues.length && (
                 <button
                   onClick={handleHintRequest}
-                  className="w-full py-2.5 rounded-xl text-xs font-bold border border-dashed border-white/15 text-slate-400 hover:border-neon-green/40 hover:text-neon-green transition-all duration-200"
+                  className="w-full py-2.5 rounded-xl text-xs font-bold border border-dashed border-theme-light text-theme-muted hover:border-neon-green/40 hover:text-neon-green transition-all duration-200"
                 >
                   💡 Reveal Next Clue ({shownClues.length}/{clues.length})
                 </button>
@@ -198,7 +198,7 @@ function CountryInfoGuess() {
                     onChange={(e) => setGuess(e.target.value)}
                     placeholder="Type the country name…"
                     autoFocus
-                    className="flex-1 bg-navy-800 border border-white/10 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-neon-green/50 transition-colors placeholder:text-slate-600"
+                    className="flex-1 border border-theme-light text-theme-primary rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-neon-green/50 transition-colors placeholder:text-theme-muted" style={{ backgroundColor: 'var(--input-bg)' }}
                   />
                   <button
                     type="submit"
@@ -222,7 +222,7 @@ function CountryInfoGuess() {
             </div>
           </div>
 
-          <Link to="/" className="mt-4 block text-center text-xs text-slate-500 hover:text-slate-300 transition-colors">
+          <Link to="/" className="mt-4 block text-center text-xs text-theme-muted hover:text-theme-secondary transition-colors">
             ← Back to Home
           </Link>
         </div>
