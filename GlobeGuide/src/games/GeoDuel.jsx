@@ -89,12 +89,12 @@ function GeoDuel() {
 
   if (pair.length < 2) {
     return (
-      <div className="min-h-screen flex flex-col bg-navy-900 text-white font-sans">
+      <div className="min-h-screen flex flex-col bg-theme-primary text-theme-primary font-sans">
         <Navbar />
         <main className="flex-1 flex items-center justify-center">
           <div className="text-center">
             <div className="text-5xl animate-spin-slow mb-4">⚔️</div>
-            <p className="text-slate-400">Loading countries…</p>
+            <p className="text-theme-secondary">Loading countries…</p>
           </div>
         </main>
         <Footer />
@@ -105,22 +105,22 @@ function GeoDuel() {
   const [c1, c2] = pair;
 
   return (
-    <div className="min-h-screen flex flex-col bg-navy-900 text-white font-sans">
+    <div className="min-h-screen flex flex-col bg-theme-primary text-theme-primary font-sans">
       <Navbar />
       <main className="flex-1 flex items-center justify-center px-4 py-10">
         <div className="w-full max-w-2xl">
           {/* HUD */}
           <div className="flex items-center justify-between mb-8">
-            <div className="glass rounded-xl px-4 py-2 border border-orange-400/20">
-              <p className="text-xs text-slate-400 font-bold uppercase tracking-widest">Score</p>
+            <div className="glass rounded-xl px-4 py-2 border border-orange-400/20 text-theme-primary">
+              <p className="text-xs text-theme-secondary font-bold uppercase tracking-widest">Score</p>
               <p className="text-2xl font-black" style={{ color: ACCENT }}>{score}</p>
             </div>
             <div className="text-center">
               <div className="text-3xl mb-1">⚔️</div>
               <p className="text-xs text-slate-500 font-bold uppercase tracking-widest">Geo Duel</p>
             </div>
-            <div className="glass rounded-xl px-4 py-2 border border-orange-400/20 text-right">
-              <p className="text-xs text-slate-400 font-bold uppercase tracking-widest">Streak</p>
+            <div className="glass rounded-xl px-4 py-2 border border-orange-400/20 text-right text-theme-primary">
+              <p className="text-xs text-theme-secondary font-bold uppercase tracking-widest">Streak</p>
               <p className="text-2xl font-black" style={{ color: streak > 0 ? ACCENT : '#475569' }}>
                 {streak > 0 ? `🔥 ${streak}` : '—'}
               </p>
@@ -129,7 +129,7 @@ function GeoDuel() {
 
           {/* Question prompt */}
           <div className="text-center mb-6">
-            <p className="text-slate-400 text-sm uppercase tracking-widest font-semibold mb-1">Which country has a higher</p>
+            <p className="text-theme-secondary text-sm uppercase tracking-widest font-semibold mb-1">Which country has a higher</p>
             <p className="text-2xl font-black flex items-center justify-center gap-2" style={{ color: ACCENT }}>
               <span>{propertyObj.icon}</span>
               {propertyObj.label}?
@@ -149,7 +149,7 @@ function GeoDuel() {
                   key={country.cca3}
                   onClick={() => handleGuess(idx)}
                   disabled={!!result}
-                  className={`group card-bg rounded-2xl border overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl disabled:cursor-not-allowed text-left p-0
+                  className={`group card-bg rounded-2xl border overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl disabled:cursor-not-allowed text-left p-0 text-theme-primary
                     ${result ? '' : 'hover:border-orange-400/50'}`}
                   style={{ borderColor: result ? borderColor : 'rgba(255,255,255,0.1)' }}
                 >
@@ -166,7 +166,7 @@ function GeoDuel() {
                   </div>
                   {/* Name */}
                   <div className="p-4">
-                    <p className="font-black text-center text-sm sm:text-base text-white">{country.name.common}</p>
+                    <p className="font-black text-center text-sm sm:text-base text-theme-primary">{country.name.common}</p>
                     {result && (
                       <div className="mt-2 text-center">
                         <p className="text-xs font-bold px-3 py-1 rounded-full inline-block" style={{ background: `${borderColor}20`, color: borderColor }}>
@@ -187,15 +187,15 @@ function GeoDuel() {
                 {result.v1 === result.v2 ? "🤝 It's a tie!" : result.correct ? '✅ Correct!' : '❌ Wrong!'}
               </p>
               {result.v1 !== result.v2 && (
-                <p className="text-sm mt-1 text-slate-400">
-                  <span className="font-bold text-white">{result.winner}</span> has the higher {propertyObj.label}.
+                <p className="text-sm mt-1 text-theme-secondary">
+                  <span className="font-bold text-theme-primary">{result.winner}</span> has the higher {propertyObj.label}.
                 </p>
               )}
             </div>
           )}
 
           <div className="text-center mt-6">
-            <Link to="/" className="text-xs text-slate-500 hover:text-slate-300 transition-colors">
+            <Link to="/" className="text-xs text-theme-muted hover:text-theme-secondary transition-colors">
               ← Back to Home
             </Link>
           </div>

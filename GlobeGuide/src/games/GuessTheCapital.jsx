@@ -91,12 +91,12 @@ function GuessTheCapital() {
   // ── LOADING ──
   if (!countries.length) {
     return (
-      <div className="min-h-screen flex flex-col bg-navy-900 text-white font-sans">
+      <div className="min-h-screen flex flex-col bg-theme-primary text-theme-primary font-sans">
         <Navbar />
         <main className="flex-1 flex items-center justify-center">
           <div className="text-center">
             <div className="text-5xl animate-spin-slow mb-4">🌍</div>
-            <p className="text-slate-400">Loading countries…</p>
+            <p className="text-theme-secondary">Loading countries…</p>
           </div>
         </main>
         <Footer />
@@ -107,14 +107,14 @@ function GuessTheCapital() {
   // ── START SCREEN ──
   if (!question && !gameOver) {
     return (
-      <div className="min-h-screen flex flex-col bg-navy-900 text-white font-sans">
+      <div className="min-h-screen flex flex-col bg-theme-primary text-theme-primary font-sans">
         <Navbar />
         <main className="flex-1 flex items-center justify-center px-4 py-16">
           <div className="w-full max-w-md">
-            <div className="card-bg rounded-3xl border border-white/10 p-10 text-center shadow-2xl">
+            <div className="card-bg rounded-3xl border border-theme-light p-10 text-center shadow-2xl">
               <div className="text-7xl mb-4 animate-float inline-block">🏛️</div>
-              <h1 className="text-3xl font-black mb-2">Guess the Country</h1>
-              <p className="text-slate-400 text-sm mb-8 leading-relaxed">
+              <h1 className="text-3xl font-black mb-2 text-theme-primary">Guess the Country</h1>
+              <p className="text-theme-secondary text-sm mb-8 leading-relaxed">
                 A capital city is shown guess which country it belongs to! You can use a flag hint once per question.
               </p>
               <button
@@ -124,7 +124,7 @@ function GuessTheCapital() {
               >
                 🚀 Start Game
               </button>
-              <Link to="/" className="mt-4 block text-xs text-slate-500 hover:text-slate-300 transition-colors">
+              <Link to="/" className="mt-4 block text-xs text-theme-muted hover:text-theme-secondary transition-colors">
                 ← Back to Home
               </Link>
             </div>
@@ -138,14 +138,14 @@ function GuessTheCapital() {
   // ── GAME OVER ──
   if (gameOver) {
     return (
-      <div className="min-h-screen flex flex-col bg-navy-900 text-white font-sans">
+      <div className="min-h-screen flex flex-col bg-theme-primary text-theme-primary font-sans">
         <Navbar />
         <main className="flex-1 flex items-center justify-center px-4 py-16">
           <div className="w-full max-w-md">
-            <div className="card-bg rounded-3xl border border-white/10 p-10 text-center shadow-2xl">
+            <div className="card-bg rounded-3xl border border-theme-light p-10 text-center shadow-2xl">
               <div className="text-7xl mb-4">😵</div>
-              <h2 className="text-3xl font-black mb-2">Game Over!</h2>
-              <p className="text-slate-400 mb-6">You've used all your lives.</p>
+              <h2 className="text-3xl font-black mb-2 text-theme-primary">Game Over!</h2>
+              <p className="text-theme-secondary mb-6">You've used all your lives.</p>
               <div className="glass rounded-2xl p-6 mb-8 border border-yellow-400/20">
                 <p className="text-xs uppercase font-bold tracking-widest mb-1" style={{ color: ACCENT }}>Final Score</p>
                 <p className="text-6xl font-black" style={{ background: `linear-gradient(135deg, ${ACCENT}, #fb923c)`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>{score}</p>
@@ -157,7 +157,7 @@ function GuessTheCapital() {
               >
                 🔄 Play Again
               </button>
-              <Link to="/" className="mt-4 block text-xs text-slate-500 hover:text-slate-300 transition-colors">
+              <Link to="/" className="mt-4 block text-xs text-theme-muted hover:text-theme-secondary transition-colors">
                 ← Back to Home
               </Link>
             </div>
@@ -170,7 +170,7 @@ function GuessTheCapital() {
 
   // ── GAME ──
   return (
-    <div className="min-h-screen flex flex-col bg-navy-900 text-white font-sans">
+    <div className="min-h-screen flex flex-col bg-theme-primary text-theme-primary font-sans">
       <Navbar />
       <main className="flex-1 flex items-center justify-center px-4 py-10">
         <div className="w-full max-w-lg">
@@ -196,10 +196,10 @@ function GuessTheCapital() {
           </div>
 
           {/* Card */}
-          <div className={`card-bg rounded-3xl border border-white/10 overflow-hidden shadow-2xl transition-all duration-300 ${transitioning ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}>
+          <div className={`card-bg rounded-3xl border border-theme-light overflow-hidden shadow-2xl transition-all duration-300 ${transitioning ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}>
             {/* Capital display */}
             <div className="flex flex-col items-center justify-center p-8 min-h-[160px]" style={{ background: `radial-gradient(ellipse at 50% 50%, ${ACCENT}12, transparent 70%)` }}>
-              <p className="text-xs uppercase font-bold tracking-widest mb-3 text-slate-400">Capital City</p>
+              <p className="text-xs uppercase font-bold tracking-widest mb-3 text-theme-secondary">Capital City</p>
               <p className="text-4xl sm:text-5xl font-black text-center" style={{ color: ACCENT }}>{question.capital[0]}</p>
               <div className="absolute top-3 right-4 text-xs font-bold px-2.5 py-1 rounded-full" style={{ background: `${timerColor}25`, color: timerColor }}>
                 {timer}s
@@ -215,7 +215,7 @@ function GuessTheCapital() {
 
             {/* Controls */}
             <div className="px-8 py-5">
-              <p className="text-center text-sm font-semibold text-slate-400 mb-4 uppercase tracking-widest">Which country has this capital?</p>
+              <p className="text-center text-sm font-semibold text-theme-secondary mb-4 uppercase tracking-widest">Which country has this capital?</p>
               <div className="grid grid-cols-2 gap-3 mb-4">
                 {choices.map((country) => {
                   const isCorrect = selected && country.cca3 === question.cca3;
@@ -228,7 +228,7 @@ function GuessTheCapital() {
                       className={`py-3 px-4 rounded-xl font-semibold text-sm border transition-all duration-200 hover:scale-[1.02] disabled:cursor-not-allowed
                         ${isCorrect ? 'border-neon-green/60 bg-neon-green/15 text-neon-green' :
                           isWrong ? 'border-red-500/60 bg-red-500/15 text-red-400' :
-                          'border-white/10 bg-white/5 text-white hover:bg-yellow-400/10 hover:border-yellow-400/40'}`}
+                          'border-theme-light text-theme-primary hover:bg-yellow-400/10 hover:border-yellow-400/40'}`}
                     >
                       {country.name.common}
                     </button>
@@ -238,7 +238,7 @@ function GuessTheCapital() {
               {!showHint && !selected && (
                 <button
                   onClick={() => setShowHint(true)}
-                  className="w-full py-2 rounded-xl text-xs font-bold border border-white/10 text-slate-400 hover:border-yellow-400/30 hover:text-yellow-400 transition-all duration-200"
+                  className="w-full py-2 rounded-xl text-xs font-bold border border-theme-light text-theme-muted hover:border-yellow-400/30 hover:text-yellow-400 transition-all duration-200"
                 >
                   💡 Show Flag Hint
                 </button>
