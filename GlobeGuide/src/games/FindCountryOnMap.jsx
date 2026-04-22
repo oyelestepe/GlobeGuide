@@ -100,12 +100,12 @@ function FindCountryOnMap() {
   // ── LOADING ──
   if (loading) {
     return (
-      <div className="min-h-screen flex flex-col bg-navy-900 text-white font-sans">
+      <div className="min-h-screen flex flex-col bg-theme-primary text-theme-primary font-sans">
         <Navbar />
         <main className="flex-1 flex items-center justify-center">
           <div className="text-center">
             <div className="text-5xl animate-spin-slow mb-4">🗺️</div>
-            <p className="text-slate-400">Loading world map…</p>
+            <p className="text-theme-secondary">Loading world map…</p>
           </div>
         </main>
         <Footer />
@@ -115,7 +115,7 @@ function FindCountryOnMap() {
 
   if (!geoData || !target) {
     return (
-      <div className="min-h-screen flex flex-col bg-navy-900 text-white font-sans">
+      <div className="min-h-screen flex flex-col bg-theme-primary text-theme-primary font-sans">
         <Navbar />
         <main className="flex-1 flex items-center justify-center">
           <p className="text-red-400">Error loading map data.</p>
@@ -156,20 +156,20 @@ function FindCountryOnMap() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-navy-900 text-white font-sans">
+    <div className="min-h-screen flex flex-col bg-theme-primary text-theme-primary font-sans">
       <Navbar />
       <main className="flex-1 px-4 py-8">
         <div className="max-w-5xl mx-auto">
           {/* HUD */}
           <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
             <div>
-              <p className="text-xs uppercase font-bold tracking-widest text-slate-400 mb-1">Find this country</p>
+              <p className="text-xs uppercase font-bold tracking-widest text-theme-secondary mb-1">Find this country</p>
               <p className="text-3xl sm:text-4xl font-black" style={{ color: ACCENT }}>{target.name.common}</p>
             </div>
             <div className="flex items-center gap-3">
               {/* Tries */}
               <div className="glass rounded-xl px-4 py-2 border border-purple-400/20 text-center">
-                <p className="text-xs text-slate-400 font-bold uppercase tracking-widest">Tries</p>
+                <p className="text-xs text-theme-secondary font-bold uppercase tracking-widest">Tries</p>
                 <div className="flex gap-1 justify-center mt-1">
                   {[0, 1, 2].map((i) => (
                     <span key={i} className={`w-3 h-3 rounded-full transition-all ${i < tries ? 'bg-red-500' : 'border border-white/20'}`} />
@@ -177,15 +177,15 @@ function FindCountryOnMap() {
                 </div>
               </div>
               {/* Score */}
-              <div className="glass rounded-xl px-4 py-2 border border-purple-400/20 text-center">
-                <p className="text-xs text-slate-400 font-bold uppercase tracking-widest">Score</p>
+              <div className="glass rounded-xl px-4 py-2 border border-purple-400/20 text-theme-primary text-center">
+                <p className="text-xs text-theme-secondary font-bold uppercase tracking-widest">Score</p>
                 <p className="text-xl font-black" style={{ color: ACCENT }}>{score}</p>
               </div>
             </div>
           </div>
 
           {/* Map card */}
-          <div className="card-bg rounded-2xl border border-white/10 overflow-hidden shadow-2xl relative">
+          <div className="card-bg rounded-2xl border border-theme-light overflow-hidden shadow-2xl relative">
             {/* Zoom controls */}
             <div className="absolute top-4 right-4 z-10 flex flex-col gap-2">
               <button
@@ -219,7 +219,7 @@ function FindCountryOnMap() {
                     geographies.map((geo) => {
                       const geoCode = geo.id || "UNKNOWN";
                       const geoStatus = countryStatus[geoCode];
-                      let fill = '#1e293b';
+                      let fill = 'var(--map-country-fill)';
                       if (geoStatus === 'correct') fill = '#22d35e';
                       else if (geoStatus === 'incorrect') fill = '#ef4444';
                       else if (geoStatus === 'incorrect-click') fill = '#fb923c';
@@ -229,8 +229,8 @@ function FindCountryOnMap() {
                           geography={geo}
                           onClick={() => handleCountryClick(geo)}
                           style={{
-                            default: { fill, stroke: '#334155', strokeWidth: 0.5, outline: 'none' },
-                            hover: { fill: geoStatus ? fill : ACCENT, stroke: '#475569', strokeWidth: 0.8, outline: 'none', cursor: 'pointer' },
+                            default: { fill, stroke: 'var(--map-country-stroke)', strokeWidth: 0.5, outline: 'none' },
+                            hover: { fill: geoStatus ? fill : ACCENT, stroke: 'var(--map-country-stroke)', strokeWidth: 0.8, outline: 'none', cursor: 'pointer' },
                             pressed: { fill: '#38bdf8', outline: 'none' },
                           }}
                         />
@@ -244,12 +244,12 @@ function FindCountryOnMap() {
 
           {/* Bottom controls */}
           <div className="flex items-center justify-between mt-4">
-            <Link to="/" className="text-xs text-slate-500 hover:text-slate-300 transition-colors">
+            <Link to="/" className="text-xs text-theme-muted hover:text-theme-secondary transition-colors">
               ← Back to Home
             </Link>
             <button
               onClick={handleRestart}
-              className="glass rounded-xl px-4 py-2 border border-white/10 text-slate-400 hover:text-white hover:border-purple-400/30 text-xs font-bold transition-all"
+              className="glass rounded-xl px-4 py-2 border border-theme-light text-theme-muted hover:text-theme-primary hover:border-purple-400/30 text-xs font-bold transition-all"
             >
               🔄 Restart
             </button>
