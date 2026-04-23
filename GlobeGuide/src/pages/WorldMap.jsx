@@ -100,7 +100,7 @@ function WorldMap() {
   const accent = tooltip.continent ? continentAccents[tooltip.continent] : null;
 
   return (
-    <div className="min-h-screen flex flex-col bg-navy-900 text-white font-sans">
+    <div className="min-h-screen flex flex-col bg-theme-primary text-theme-primary font-sans">
       <Navbar />
 
       {/* ── HERO ── */}
@@ -117,13 +117,13 @@ function WorldMap() {
               Explore the{' '}
               <span className="gradient-text">World Map</span>
             </h1>
-            <p className="text-slate-400 max-w-xl mx-auto text-base leading-relaxed">
+            <p className="text-theme-secondary max-w-xl mx-auto text-base leading-relaxed">
               Click on any continent to discover its countries, capitals, populations, and more.
             </p>
           </div>
 
           {/* Map card */}
-          <div className="relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl" style={{ background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)' }}>
+          <div className="relative rounded-3xl overflow-hidden border border-theme-light shadow-2xl" style={{ background: 'var(--map-card-bg)' }}>
             {/* Subtle grid overlay */}
             <div
               className="absolute inset-0 pointer-events-none opacity-[0.04]"
@@ -160,7 +160,7 @@ function WorldMap() {
                           style={{
                             default: {
                               fill,
-                              stroke: '#0f172a',
+                              stroke: 'var(--bg-primary)',
                               strokeWidth: 0.8,
                               outline: 'none',
                               transition: 'fill 0.2s ease',
@@ -187,7 +187,7 @@ function WorldMap() {
             </div>
 
             {/* Hint label */}
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-xs text-slate-500 font-medium pointer-events-none">
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-xs text-theme-muted font-medium pointer-events-none">
               Click a continent to explore its countries
             </div>
           </div>
@@ -202,11 +202,11 @@ function WorldMap() {
                   key={name}
                   onClick={() => !isDisabled && navigate(`/continent/${name.toLowerCase().replace(/\s/g, '-')}`)}
                   disabled={isDisabled}
-                  className={`group card-bg rounded-2xl border p-4 text-center transition-all duration-200 ${isDisabled ? 'opacity-40 cursor-not-allowed border-white/5' : 'border-white/8 hover:border-white/20 hover:-translate-y-1 hover:shadow-lg cursor-pointer'}`}
+                  className={`group card-bg rounded-2xl border p-4 text-center transition-all duration-200 ${isDisabled ? 'opacity-40 cursor-not-allowed border-theme-subtle' : 'border-theme-light hover:border-white/20 hover:-translate-y-1 hover:shadow-lg cursor-pointer'}`}
                   style={!isDisabled ? { '--accent': data.fill } : {}}
                 >
                   <div className="text-2xl mb-1">{data.label}</div>
-                  <p className="text-xs font-bold text-white leading-tight mb-1">{name}</p>
+                  <p className="text-xs font-bold text-theme-primary leading-tight mb-1">{name}</p>
                   {s && (
                     <p className="text-[10px] font-semibold" style={{ color: data.fill }}>
                       {s.count} countries
@@ -230,7 +230,7 @@ function WorldMap() {
           <div
             className="rounded-2xl border shadow-2xl px-5 py-4 min-w-[200px]"
             style={{
-              background: 'rgba(15,23,42,0.95)',
+              background: 'var(--tooltip-bg)',
               backdropFilter: 'blur(16px)',
               borderColor: `${accent.fill}40`,
             }}

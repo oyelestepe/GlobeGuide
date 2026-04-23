@@ -34,11 +34,11 @@ const CustomTooltip = ({ active, payload, label, formatter }) => {
   return (
     <div
       style={{
-        background: "rgba(15,23,42,0.97)",
-        border: "1px solid rgba(255,255,255,0.1)",
+        background: 'var(--tooltip-bg)',
+        border: '1px solid var(--border-light)',
         borderRadius: 12,
-        padding: "10px 16px",
-        backdropFilter: "blur(16px)",
+        padding: '10px 16px',
+        backdropFilter: 'blur(16px)',
       }}
     >
       {label && <p style={{ color: "#94a3b8", fontSize: 12, marginBottom: 6 }}>{label}</p>}
@@ -53,12 +53,9 @@ const CustomTooltip = ({ active, payload, label, formatter }) => {
 
 /* ─── Section card wrapper ───────────────────────────── */
 const ChartCard = ({ title, subtitle, children }) => (
-  <div
-    className="rounded-2xl p-6 border border-white/10"
-    style={{ background: "rgba(15,23,42,0.85)" }}
-  >
-    <h3 className="text-xl font-bold text-white mb-1">{title}</h3>
-    {subtitle && <p className="text-slate-500 text-sm mb-6">{subtitle}</p>}
+  <div className="card-bg rounded-2xl p-6 border border-theme-light shadow-lg">
+    <h3 className="text-xl font-bold text-theme-primary mb-1">{title}</h3>
+    {subtitle && <p className="text-theme-muted text-sm mb-6">{subtitle}</p>}
     {children}
   </div>
 );
@@ -134,8 +131,8 @@ function CountryComparePage() {
         <Navbar />
         <div className="min-h-screen hero-bg flex flex-col items-center justify-center gap-6 px-4">
           <div className="text-6xl">🌍</div>
-          <h2 className="text-3xl font-bold text-white">Couldn't load country data</h2>
-          <p className="text-slate-400 text-center max-w-md">
+          <h2 className="text-3xl font-bold text-theme-primary">Couldn't load country data</h2>
+          <p className="text-theme-secondary text-center max-w-md">
             We couldn't find details for one or more of the selected countries.
             Please go back and try different selections.
           </p>
@@ -165,7 +162,7 @@ function CountryComparePage() {
             className="w-16 h-16 rounded-full border-4 border-t-transparent animate-spin"
             style={{ borderColor: "#22d35e", borderTopColor: "transparent" }}
           />
-          <p className="text-slate-400 text-lg font-medium">Loading country data…</p>
+          <p className="text-theme-secondary text-lg font-medium">Loading country data…</p>
         </div>
         <Footer />
       </>
@@ -244,14 +241,14 @@ function CountryComparePage() {
           <div className="text-center">
             <button
               onClick={() => navigate("/country-compare")}
-              className="text-slate-500 hover:text-white text-sm mb-4 inline-flex items-center gap-1 transition-colors"
+              className="text-theme-muted hover:text-theme-primary text-sm mb-4 inline-flex items-center gap-1 transition-colors"
             >
               ← Change selection
             </button>
             <h1 className="text-4xl font-extrabold gradient-text">
               Country Comparison
             </h1>
-            <p className="text-slate-400 mt-2">
+            <p className="text-theme-secondary mt-2">
               Comparing {countries.length} countries across key metrics
             </p>
           </div>
@@ -276,7 +273,7 @@ function CountryComparePage() {
                   className="w-20 h-14 object-cover rounded-lg shadow-lg mb-3"
                   style={{ border: `2px solid ${SLOT_COLORS[i]}55` }}
                 />
-                <h2 className="text-white font-bold text-lg leading-tight mb-1">
+                <h2 className="text-theme-primary font-bold text-lg leading-tight mb-1">
                   {country.name.common}
                 </h2>
                 <span
@@ -464,8 +461,8 @@ function CountryComparePage() {
             <div className="overflow-x-auto">
               <table className="w-full text-sm text-left border-collapse">
                 <thead>
-                  <tr className="border-b border-white/10">
-                    <th className="py-3 pr-6 text-slate-500 font-semibold uppercase text-xs tracking-wider">
+                  <tr className="border-b border-theme-subtle">
+                    <th className="py-3 pr-6 text-theme-muted font-semibold uppercase text-xs tracking-wider">
                       Metric
                     </th>
                     {countries.map((c, i) => (
@@ -522,14 +519,14 @@ function CountryComparePage() {
                   ].map((row, ri) => (
                     <tr
                       key={row.label}
-                      className="border-b border-white/5 hover:bg-white/3 transition-colors"
+                      className="border-b border-theme-subtle hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
                       style={{ background: ri % 2 === 0 ? "rgba(255,255,255,0.015)" : "transparent" }}
                     >
-                      <td className="py-3 pr-6 text-slate-500 font-medium">
+                      <td className="py-3 pr-6 text-theme-muted font-medium">
                         {row.label}
                       </td>
                       {countries.map((c, i) => (
-                        <td key={c.cca3} className="py-3 pr-6 text-slate-200">
+                        <td key={c.cca3} className="py-3 pr-6 text-theme-secondary">
                           {row.fn(c)}
                         </td>
                       ))}
