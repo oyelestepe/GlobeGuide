@@ -71,8 +71,8 @@ function CountryCompare() {
           <h1 className="text-4xl font-extrabold gradient-text mb-3">
             Country Compare
           </h1>
-          <p className="text-slate-400 text-lg">
-            Select <span className="text-white font-semibold">2 to 5 countries</span> on the map, then hit Compare.
+          <p className="text-theme-secondary text-lg">
+            Select <span className="text-theme-primary font-semibold">2 to 5 countries</span> on the map, then hit Compare.
           </p>
           {/* Slot indicators */}
           <div className="flex justify-center gap-2 mt-4 flex-wrap">
@@ -94,8 +94,8 @@ function CountryCompare() {
 
         {/* Map */}
         <div
-          className="max-w-5xl mx-auto rounded-2xl overflow-hidden border border-white/10 shadow-2xl"
-          style={{ background: "rgba(15,23,42,0.85)" }}
+          className="max-w-5xl mx-auto rounded-2xl overflow-hidden border border-theme-light shadow-2xl"
+          style={{ background: 'var(--tooltip-bg)' }}
         >
           <ComposableMap
             projection="geoEqualEarth"
@@ -155,13 +155,12 @@ function CountryCompare() {
         {/* Selection Tray */}
         <div className="max-w-5xl mx-auto mt-6">
           <div
-            className="rounded-2xl p-5 border border-white/10"
-            style={{ background: "rgba(15,23,42,0.9)" }}
+            className="rounded-2xl p-5 border border-theme-light glass"
           >
             <div className="flex flex-wrap items-center gap-3 justify-between">
               <div className="flex flex-wrap gap-2 items-center">
                 {selected.length === 0 ? (
-                  <span className="text-slate-500 text-sm italic">
+                  <span className="text-theme-muted text-sm italic">
                     Click countries on the map to select them…
                   </span>
                 ) : (
@@ -189,7 +188,7 @@ function CountryCompare() {
               </div>
 
               <div className="flex items-center gap-3">
-                <span className="text-slate-500 text-sm">
+                <span className="text-theme-muted text-sm">
                   {selected.length}/{MAX_COUNTRIES} selected
                 </span>
                 <button
