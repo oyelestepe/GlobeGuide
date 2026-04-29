@@ -30,7 +30,7 @@ function GeoDuel() {
   const { search } = useLocation();
 
   useEffect(() => {
-    fetch("https://restcountries.com/v3.1/all?fields=name,flags,cca3,population,area,borders")
+    fetch("/data/countries.json")
       .then((r) => r.json())
       .then((data) => Array.isArray(data) ? setCountries(data) : setCountries([]))
       .catch(console.error);

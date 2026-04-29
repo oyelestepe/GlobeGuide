@@ -34,11 +34,13 @@ function ContinentPage() {
 
   useEffect(() => {
     setLoading(true);
-    const region = continentToApiRegion[name] || name;
-    fetch(`https://restcountries.com/v3.1/region/${region}`)
+    fetch('/data/countries.json')
       .then(res => res.json())
       .then(data => {
-        let filtered = data;
+        const region = continentToApiRegion[name] || name;
+        let filtered = data.filter(
+          c => c.region?.toLowerCase() === region.toLowerCase()
+        );
         if (name === "north-america") {
           filtered = data.filter(c =>
             c.subregion === "Northern America" ||
@@ -47,14 +49,17 @@ function ContinentPage() {
           );
         } else if (name === "south-america") {
           filtered = data.filter(c => c.subregion === "South America");
+        } else if (name === "australia") {
+          filtered = data.filter(c => c.region?.toLowerCase() === "oceania");
+        } else if (name === "antarctica") {
+          filtered = data.filter(c => c.region?.toLowerCase() === "antarctic");
         }
-        // Sort alphabetically
         filtered.sort((a, b) => a.name.common.localeCompare(b.name.common));
         setCountries(filtered);
         setLoading(false);
       })
       .catch(err => {
-        console.error("API error:", err);
+        console.error("Data error:", err);
         setLoading(false);
       });
   }, [name]);

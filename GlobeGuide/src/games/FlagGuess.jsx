@@ -28,16 +28,12 @@ function FlagGuess() {
   const timerRef = useRef();
 
   useEffect(() => {
-    if (!region) return;
     const fetchCountries = async () => {
       try {
-        const endpoint =
-          region === "all"
-            ? "https://restcountries.com/v3.1/all?fields=name,flags,cca3,region"
-            : `https://restcountries.com/v3.1/region/${region}?fields=name,flags,cca3,region`;
-        const response = await fetch(endpoint);
+        const response = await fetch("/data/countries.json");
         const data = await response.json();
-        setCountries(data);
+        const filtered = region === "all" ? data : data.filter((c) => c.region.toLowerCase() === region.toLowerCase());
+        setCountries(filtered);
         setAskedCountries(new Set());
       } catch (error) {
         console.error("Error fetching countries:", error);

@@ -40,7 +40,7 @@ function CountryInfoGuess() {
   const [transitioning, setTransitioning] = useState(false);
 
   useEffect(() => {
-    fetch("https://restcountries.com/v3.1/all?fields=name,region,subregion,population,area,languages,currencies,borders,capital,flags")
+    fetch("/data/countries.json")
       .then((r) => r.json())
       .then((data) => {
         setCountries(data);

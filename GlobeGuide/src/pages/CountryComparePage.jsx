@@ -80,9 +80,7 @@ function CountryComparePage() {
 
   /* Fetch all country data once */
   useEffect(() => {
-    fetch(
-      "https://restcountries.com/v3.1/all?fields=name,flags,cca3,population,area,region,subregion,languages,currencies,borders"
-    )
+    fetch("/data/countries.json")
       .then(res => {
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         return res.json();

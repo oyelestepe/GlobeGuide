@@ -26,7 +26,7 @@ function GuessTheCapital() {
   const [transitioning, setTransitioning] = useState(false);
 
   useEffect(() => {
-    fetch("https://restcountries.com/v3.1/all?fields=name,capital,cca3,flags")
+    fetch("/data/countries.json")
       .then((r) => r.json())
       .then((data) => {
         const filtered = data.filter((c) => c.capital && c.capital.length > 0);

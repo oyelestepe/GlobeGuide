@@ -7,9 +7,7 @@ function RandomCountry() {
   useEffect(() => {
     const fetchCountries = async () => {
       try {
-        const response = await fetch(
-          "https://restcountries.com/v3.1/all?fields=name,capital,region,population,flags,currencies,languages,timezones,borders,cca3"
-        );
+        const response = await fetch("/data/countries.json");
         const countries = await response.json();
 
         const today = new Date();
@@ -18,13 +16,11 @@ function RandomCountry() {
         const selectedCountry = countries[randomIndex];
         setCountry(selectedCountry);
 
-        if (selectedCountry.borders) {
-          const neighborCodes = selectedCountry.borders.join(",");
-          const neighborsResponse = await fetch(
-            `https://restcountries.com/v3.1/alpha?codes=${neighborCodes}&fields=name,flags`
+        if (selectedCountry.borders && selectedCountry.borders.length > 0) {
+          const neighborData = countries.filter((c) =>
+            selectedCountry.borders.includes(c.cca3)
           );
-          const neighborsData = await neighborsResponse.json();
-          setNeighbors(neighborsData);
+          setNeighbors(neighborData);
         } else {
           setNeighbors([]);
         }
