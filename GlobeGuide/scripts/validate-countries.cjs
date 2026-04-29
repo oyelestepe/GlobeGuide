@@ -1,0 +1,16 @@
+const d = require('../public/data/countries.json');
+const c = d[0];
+console.log('Total countries:', d.length);
+console.log('Keys:', Object.keys(c).join(', '));
+console.log('Sample name:', c.name.common);
+console.log('Sample cca3:', c.cca3);
+console.log('Sample region:', c.region);
+console.log('Sample capital:', c.capital);
+console.log('Sample flags.png:', c.flags.png);
+console.log('Sample timezones:', c.timezones && c.timezones[0]);
+console.log('Sample languages:', JSON.stringify(c.languages));
+console.log('Sample currencies:', JSON.stringify(c.currencies));
+console.log('Sample borders:', c.borders && c.borders.slice(0, 3));
+console.log('Sample population:', c.population);
+console.log('Sample area:', c.area);
+console.log('\nAll good!');
