@@ -32,7 +32,7 @@ function WorldMap() {
   const [tooltip, setTooltip] = useState({ visible: false, x: 0, y: 0, continent: null });
 
   useEffect(() => {
-    fetch('https://restcountries.com/v3.1/all?fields=name,region,continents,area,population')
+    fetch('/data/countries.json')
       .then(r => r.json())
       .then(data => {
         if (!Array.isArray(data)) return;

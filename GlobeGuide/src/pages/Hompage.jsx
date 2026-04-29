@@ -60,16 +60,16 @@ const games = [
     badge: 'Classic',
   },
   {
-  id: 'country-compare',
-  title: 'Country Compare',
-  description: 'Which country is bigger? More populated? Compare nations side by side!',
-  emoji: '📊',
-  path: '/country-compare',
-  img: '/country-compare.png',
-  color: 'from-pink-500/20 to-rose-500/10',
-  accent: '#f472b6',
-  badge: 'Compare',
-},
+    id: 'country-compare',
+    title: 'Country Compare',
+    description: 'Which country is bigger? More populated? Compare nations side by side!',
+    emoji: '📊',
+    path: '/country-compare',
+    img: '/country-compare.png',
+    color: 'from-pink-500/20 to-rose-500/10',
+    accent: '#f472b6',
+    badge: 'Compare',
+  },
 ];
 
 const features = [
@@ -95,7 +95,7 @@ const features = [
 
 function Homepage() {
   return (
-    <div className="min-h-screen flex flex-col bg-navy-900 text-white font-sans">
+    <div className="min-h-screen flex flex-col bg-theme-primary text-theme-primary font-sans">
       <Navbar />
 
       {/* ── HERO SECTION ── */}
@@ -122,14 +122,14 @@ function Homepage() {
           <div className="text-7xl sm:text-8xl mb-6 animate-float inline-block">🌍</div>
 
           {/* Heading */}
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black leading-tight mb-6 animate-slide-up">
+          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black leading-tight mb-6 animate-slide-up text-theme-primary">
             Conquer the
             <span className="block gradient-text">Globe</span>
             One Game at a Time.
           </h1>
 
           {/* Subtext */}
-          <p className="text-lg sm:text-xl text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-in">
+          <p className="text-lg sm:text-xl text-theme-secondary max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-in">
             The most fun way to learn geography. Play flag quizzes, find countries on maps, duel your friends
             all completely{' '}
             <span className="text-neon-green font-bold px-1.5 py-0.5 bg-neon-green/10 rounded">free</span>.
@@ -148,26 +148,26 @@ function Homepage() {
             </Link>
             <a
               href="#games"
-              className="flex items-center gap-2 px-8 py-4 rounded-2xl glass border border-white/10 text-white font-semibold text-lg hover:border-neon-green/30 hover:bg-white/5 transition-all duration-200"
+              className="flex items-center gap-2 px-8 py-4 rounded-2xl glass border border-theme-light text-theme-primary font-semibold text-lg hover:border-neon-green/30 hover:bg-neon-green/5 transition-all duration-200"
             >
               Explore Games 🎮
             </a>
           </div>
 
-          {/* Hero image */}
-          <div className="mt-16 max-w-3xl mx-auto relative">
+          {/* Hero image — resized from max-w-3xl to max-w-2xl and capped height */}
+          <div className="mt-14 max-w-2xl mx-auto relative">
             <div className="absolute -inset-1 bg-gradient-to-r from-neon-green/30 via-neon-blue/30 to-neon-purple/30 rounded-3xl blur-lg opacity-60" />
             <img
               src="/hero.png"
               alt="GlobeGuide gameplay preview"
-              className="relative w-full rounded-2xl border border-white/10 shadow-2xl"
+              className="relative w-full max-h-72 object-cover rounded-2xl border border-theme-light shadow-2xl"
             />
           </div>
         </div>
       </section>
 
       {/* ── STATS BAR ── */}
-      <section className="border-y border-white/5 bg-navy-800/50">
+      <section className="border-y border-theme-subtle" style={{ backgroundColor: 'var(--stats-bg)' }}>
         <div className="max-w-5xl mx-auto px-4 py-6">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
             {[
@@ -179,7 +179,7 @@ function Homepage() {
               <div key={stat.label} className="flex flex-col items-center gap-1">
                 <span className="text-2xl">{stat.emoji}</span>
                 <span className="text-2xl sm:text-3xl font-black gradient-text">{stat.value}</span>
-                <span className="text-xs text-slate-500 font-medium uppercase tracking-wider">{stat.label}</span>
+                <span className="text-xs text-theme-muted font-medium uppercase tracking-wider">{stat.label}</span>
               </div>
             ))}
           </div>
@@ -192,11 +192,11 @@ function Homepage() {
           {/* Section header */}
           <div className="text-center mb-16">
             <p className="text-xs font-bold text-neon-green uppercase tracking-widest mb-3">🎲 Pick Your Game</p>
-            <h2 className="text-4xl sm:text-5xl font-black mb-4">
-              Play & Learn:{' '}
+            <h2 className="text-4xl sm:text-5xl font-black mb-4 text-theme-primary">
+              Play &amp; Learn:{' '}
               <span className="gradient-text">GlobeGuide Games</span>
             </h2>
-            <p className="text-slate-400 text-lg max-w-xl mx-auto">
+            <p className="text-theme-secondary text-lg max-w-xl mx-auto">
               Challenge yourself with our fun and educational geography games choose your adventure!
             </p>
           </div>
@@ -206,7 +206,7 @@ function Homepage() {
             {games.map((game) => (
               <div
                 key={game.id}
-                className="group relative card-bg rounded-2xl border border-white/8 hover:border-white/20 overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-card-hover flex flex-col"
+                className="group relative card-bg rounded-2xl border border-theme-light hover:border-theme-light overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-card-hover flex flex-col"
                 style={{ '--accent': game.accent }}
               >
                 {/* Glow effect on hover */}
@@ -225,12 +225,12 @@ function Homepage() {
                   </span>
                 </div>
 
-                {/* Image area */}
-                <div className={`relative bg-gradient-to-br ${game.color} p-8 flex items-center justify-center min-h-[160px]`}>
+                {/* Image area — fixed height, centered, no padding overflow */}
+                <div className={`relative bg-gradient-to-br ${game.color} flex items-center justify-center h-44`}>
                   <img
                     src={game.img}
                     alt={game.title}
-                    className="w-28 h-28 object-contain drop-shadow-2xl group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-300"
+                    className="h-34 w-auto max-w-[50%] object-contain drop-shadow-2xl group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-300"
                   />
                 </div>
 
@@ -238,9 +238,9 @@ function Homepage() {
                 <div className="p-6 flex flex-col flex-1">
                   <div className="flex items-center gap-2 mb-2">
                     <span className="text-xl">{game.emoji}</span>
-                    <h3 className="text-lg font-bold text-white">{game.title}</h3>
+                    <h3 className="text-lg font-bold text-theme-primary">{game.title}</h3>
                   </div>
-                  <p className="text-sm text-slate-400 leading-relaxed flex-1">{game.description}</p>
+                  <p className="text-sm text-theme-secondary leading-relaxed flex-1">{game.description}</p>
 
                   <Link
                     to={game.path}
@@ -270,14 +270,14 @@ function Homepage() {
       </section>
 
       {/* ── COUNTRY OF THE DAY ── */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-navy-800/30 border-y border-white/5">
+      <section className="py-20 px-4 sm:px-6 lg:px-8 border-y border-theme-subtle" style={{ backgroundColor: 'var(--section-alt-bg)' }}>
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <p className="text-xs font-bold text-neon-yellow uppercase tracking-widest mb-3">🌟 Daily Discovery</p>
-            <h2 className="text-3xl sm:text-4xl font-black mb-3">
+            <h2 className="text-3xl sm:text-4xl font-black mb-3 text-theme-primary">
               Country of the Day
             </h2>
-            <p className="text-slate-400 max-w-lg mx-auto">
+            <p className="text-theme-secondary max-w-lg mx-auto">
               A new country is featured every day. Discover its culture, geography, and neighbours!
             </p>
           </div>
@@ -290,8 +290,8 @@ function Homepage() {
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
             <p className="text-xs font-bold text-neon-purple uppercase tracking-widest mb-3">✨ Why GlobeGuide?</p>
-            <h2 className="text-4xl sm:text-5xl font-black">
-              Play, Learn &{' '}
+            <h2 className="text-4xl sm:text-5xl font-black text-theme-primary">
+              Play, Learn &amp;{' '}
               <span className="gradient-text-warm">Conquer</span>
             </h2>
           </div>
@@ -299,13 +299,13 @@ function Homepage() {
             {features.map((f) => (
               <div
                 key={f.title}
-                className="group card-bg rounded-2xl border border-white/8 p-8 text-center hover:border-white/15 hover:-translate-y-1 transition-all duration-300 hover:shadow-card"
+                className="group card-bg rounded-2xl border border-theme-light p-8 text-center hover:border-theme-light hover:-translate-y-1 transition-all duration-300 hover:shadow-card"
               >
                 <div className="text-5xl mb-4 inline-block group-hover:scale-110 group-hover:animate-bounce-light transition-transform duration-300">
                   {f.emoji}
                 </div>
                 <h3 className={`text-xl font-black mb-3 ${f.color}`}>{f.title}</h3>
-                <p className="text-slate-400 text-sm leading-relaxed">{f.desc}</p>
+                <p className="text-theme-secondary text-sm leading-relaxed">{f.desc}</p>
               </div>
             ))}
           </div>
@@ -313,14 +313,14 @@ function Homepage() {
       </section>
 
       {/* ── WORLD MAP CTA TEASER ── */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-navy-800/30 border-y border-white/5">
+      <section className="py-16 px-4 sm:px-6 lg:px-8 border-y border-theme-subtle" style={{ backgroundColor: 'var(--section-alt-bg)' }}>
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-5xl mb-4">🗺️</p>
-          <h2 className="text-3xl sm:text-4xl font-black mb-4">
+          <h2 className="text-3xl sm:text-4xl font-black mb-4 text-theme-primary">
             Explore the{' '}
             <span className="gradient-text">Interactive World Map</span>
           </h2>
-          <p className="text-slate-400 mb-8 max-w-xl mx-auto">
+          <p className="text-theme-secondary mb-8 max-w-xl mx-auto">
             Click on any country to learn facts, see its flag, and explore its neighbours all on a beautiful interactive map.
           </p>
           <Link
@@ -342,11 +342,11 @@ function Homepage() {
         <div className="absolute bottom-8 right-10 text-5xl animate-float-slow opacity-30 pointer-events-none">⭐</div>
 
         <div className="relative max-w-3xl mx-auto text-center">
-          <h2 className="text-4xl sm:text-5xl font-black mb-5 leading-tight">
+          <h2 className="text-4xl sm:text-5xl font-black mb-5 leading-tight text-theme-primary">
             Ready to Conquer
             <span className="block gradient-text">the Globe?</span>
           </h2>
-          <p className="text-slate-400 text-lg mb-10 max-w-xl mx-auto">
+          <p className="text-theme-secondary text-lg mb-10 max-w-xl mx-auto">
             Join thousands of learners already exploring the world through games. No account needed just click and play!
           </p>
           <Link
