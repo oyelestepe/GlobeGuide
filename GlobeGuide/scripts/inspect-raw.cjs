@@ -1,0 +1,15 @@
+const countries = require('world-countries');
+const c = countries[0];
+const keys = Object.keys(c);
+console.log('Keys:', keys.join(', '));
+console.log('timezones:', JSON.stringify(c.timezones));
+console.log('population:', c.population);
+console.log('name:', JSON.stringify(c.name));
+console.log('flags:', JSON.stringify(c.flags));
+console.log('cca3:', c.cca3);
+console.log('region:', c.region);
+console.log('capital:', JSON.stringify(c.capital));
+console.log('languages:', JSON.stringify(c.languages));
+console.log('currencies:', JSON.stringify(c.currencies));
+console.log('borders:', JSON.stringify(c.borders));
+console.log('area:', c.area);
