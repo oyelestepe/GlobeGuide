@@ -487,7 +487,7 @@ function CountryComparePage() {
 
                     {
                       label: "Population",
-                      fn: c => c.population.toLocaleString(),
+                      fn: c => c.population?.toLocaleString() || "0",
                     },
                     {
                       label: "Area",
@@ -496,12 +496,12 @@ function CountryComparePage() {
                     {
                       label: "Languages",
                       fn: c =>
-                        c.languages ? Object.values(c.languages).join(", ") : "—",
+                        c.languages && Object.keys(c.languages).length > 0 ? Object.values(c.languages).join(", ") : "—",
                     },
                     {
                       label: "Currencies",
                       fn: c =>
-                        c.currencies
+                        c.currencies && Object.keys(c.currencies).length > 0
                           ? Object.values(c.currencies)
                               .map(cur => `${cur.name} (${cur.symbol || "?"})`)
                               .join(", ")

@@ -43,10 +43,10 @@ function RandomCountry() {
 
   const facts = [
     { label: 'Capital', value: country.capital?.[0] || 'N/A', emoji: '🏛️' },
-    { label: 'Region', value: country.region, emoji: '🌍' },
-    { label: 'Population', value: country.population.toLocaleString(), emoji: '👥' },
-    { label: 'Currency', value: country.currencies ? Object.values(country.currencies)[0].name : 'N/A', emoji: '💰' },
-    { label: 'Languages', value: country.languages ? Object.values(country.languages).join(', ') : 'N/A', emoji: '🗣️' },
+    { label: 'Region', value: country.region || 'N/A', emoji: '🌍' },
+    { label: 'Population', value: country.population?.toLocaleString() || '0', emoji: '👥' },
+    { label: 'Currency', value: country.currencies && Object.values(country.currencies).length > 0 ? Object.values(country.currencies)[0].name : 'N/A', emoji: '💰' },
+    { label: 'Languages', value: country.languages && Object.values(country.languages).length > 0 ? Object.values(country.languages).join(', ') : 'N/A', emoji: '🗣️' },
     { label: 'Timezone', value: country.timezones?.[0] || 'N/A', emoji: '🕐' },
   ];
 

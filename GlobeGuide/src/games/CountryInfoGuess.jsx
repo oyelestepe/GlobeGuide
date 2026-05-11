@@ -14,8 +14,8 @@ function getClues(country) {
   if (country.subregion) clues.push({ label: 'Subregion', value: country.subregion, icon: '📍' });
   if (country.population) clues.push({ label: 'Population', value: country.population.toLocaleString(), icon: '👥' });
   if (country.area) clues.push({ label: 'Area', value: `${country.area.toLocaleString()} km²`, icon: '📐' });
-  if (country.languages) clues.push({ label: 'Languages', value: Object.values(country.languages).join(', '), icon: '🗣️' });
-  if (country.currencies) clues.push({ label: 'Currency', value: Object.values(country.currencies)[0].name, icon: '💰' });
+  if (country.languages && Object.keys(country.languages).length > 0) clues.push({ label: 'Languages', value: Object.values(country.languages).join(', '), icon: '🗣️' });
+  if (country.currencies && Object.values(country.currencies).length > 0) clues.push({ label: 'Currency', value: Object.values(country.currencies)[0].name, icon: '💰' });
   if (country.borders?.length) clues.push({ label: 'Borders', value: `${country.borders.length} countries`, icon: '🗺️' });
   return clues;
 }
